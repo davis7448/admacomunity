@@ -8,6 +8,7 @@ _Learn about the person you're helping. Update this as you go._
   David
 - **Pronouns:** _(optional)_
 - **Timezone:**
+  Colombia (America/Bogota)
 - **Notes:**
 
 ## Context
