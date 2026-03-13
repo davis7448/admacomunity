@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nexus Command - Leader Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffff00",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#0a0a05",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .metric-gradient {
+            background: linear-gradient(180deg, rgba(255, 255, 0, 0.1) 0%, rgba(255, 255, 0, 0) 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Header -->
+<header class="flex items-center justify-between p-4 sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-white/10">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full border-2 border-primary p-0.5">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Avatar of the high commander Nexus" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9GWY7BqKWVXplRPQrbflxA92dH43QrUsX2L_mtgxE6ZjoOLYT1ZnxED4JN-Hiv_7KwsrFsYL6pbjDzQ02zYxMaSulihuC2ZxC7dyl2CSSSe8HTI2UrEq4Mqv15J72BomlkMVtXDNZagRaIPa4Uiswfs5hPWH3kqMTtLq8gIPhyraHOa7WjyL6uGbbvBMN-Fgi5Nn0AECrJGotKtXzOeS3VPf8Sh9QxJJx3avn30-adoJDg0IIISIy2LW9THmCGZcQSRk87mm2GtA");'></div>
+</div>
+<div>
+<h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">NEXUS COMMAND</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Leader Dashboard</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="size-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[22px]">search</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 relative">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full shadow-[0_0_8px_rgba(255,255,0,0.8)]"></span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Key Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="relative overflow-hidden group p-5 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10">
+<div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary text-4xl">analytics</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Influence</p>
+<div class="mt-2 flex items-end gap-2">
+<h3 class="text-3xl font-bold dark:text-white">842.5K</h3>
+<span class="text-emerald-500 text-sm font-bold mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span> 12.4%
+                    </span>
+</div>
+<div class="mt-4 h-1 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%] shadow-[0_0_10px_rgba(255,255,0,0.5)]"></div>
+</div>
+</div>
+<div class="relative overflow-hidden group p-5 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10">
+<div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary text-4xl">group</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Active Units</p>
+<div class="mt-2 flex items-end gap-2">
+<h3 class="text-3xl font-bold dark:text-white">1,204</h3>
+<span class="text-emerald-500 text-sm font-bold mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span> 5.1%
+                    </span>
+</div>
+<div class="mt-4 h-1 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[45%] shadow-[0_0_10px_rgba(255,255,0,0.5)]"></div>
+</div>
+</div>
+<div class="relative overflow-hidden group p-5 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10">
+<div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary text-4xl">shield</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">System Stability</p>
+<div class="mt-2 flex items-end gap-2">
+<h3 class="text-3xl font-bold dark:text-white">98.2%</h3>
+<span class="text-rose-500 text-sm font-bold mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_down</span> 0.4%
+                    </span>
+</div>
+<div class="mt-4 h-1 w-full bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[98%] shadow-[0_0_10px_rgba(255,255,0,0.5)]"></div>
+</div>
+</div>
+</div>
+<!-- Main Visualization -->
+<div class="rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 p-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h2 class="text-xl font-bold dark:text-white">Influence Growth Matrix</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400">Regional impact tracking over 30 cycles</p>
+</div>
+<div class="flex bg-slate-100 dark:bg-white/10 p-1 rounded-xl">
+<button class="px-4 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-white/20 shadow-sm">DAY</button>
+<button class="px-4 py-1.5 rounded-lg text-xs font-bold text-slate-500 dark:text-slate-400">WEEK</button>
+<button class="px-4 py-1.5 rounded-lg text-xs font-bold text-slate-500 dark:text-slate-400">MONTH</button>
+</div>
+</div>
+<div class="relative h-64 w-full">
+<!-- Abstract Graph SVG -->
+<svg class="w-full h-full drop-shadow-[0_0_15px_rgba(255,255,0,0.3)]" viewbox="0 0 800 200">
+<defs>
+<lineargradient id="lineGrad" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#ffff00" stop-opacity="0.2"></stop>
+<stop offset="50%" stop-color="#ffff00" stop-opacity="1"></stop>
+<stop offset="100%" stop-color="#ffff00" stop-opacity="0.2"></stop>
+</lineargradient>
+<lineargradient id="fillGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#ffff00" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#ffff00" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,150 Q100,140 200,80 T400,100 T600,40 T800,60 L800,200 L0,200 Z" fill="url(#fillGrad)"></path>
+<path d="M0,150 Q100,140 200,80 T400,100 T600,40 T800,60" fill="none" stroke="url(#lineGrad)" stroke-linecap="round" stroke-width="4"></path>
+<!-- Data Points -->
+<circle cx="200" cy="80" fill="#ffff00" r="4"></circle>
+<circle cx="400" cy="100" fill="#ffff00" r="4"></circle>
+<circle cx="600" cy="40" fill="#ffff00" r="4"></circle>
+</svg>
+<!-- Grid Lines Overlay -->
+<div class="absolute inset-0 grid grid-cols-4 pointer-events-none opacity-10">
+<div class="border-r border-slate-400 dark:border-white"></div>
+<div class="border-r border-slate-400 dark:border-white"></div>
+<div class="border-r border-slate-400 dark:border-white"></div>
+</div>
+</div>
+<div class="flex justify-between mt-6 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+<span>Phase 01</span>
+<span>Phase 02</span>
+<span>Phase 03</span>
+<span>Phase 04</span>
+<span>Phase 05</span>
+</div>
+</div>
+<!-- Secondary Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-20">
+<!-- Map Mini View -->
+<div class="rounded-3xl overflow-hidden bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 h-72 relative group">
+<div class="absolute inset-0 opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700 bg-cover bg-center" data-alt="Futuristic world map with heat zones" data-location="Neo-Tokyo" style="background-image: url('https://placeholder.pics/svg/300');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full flex justify-between items-end">
+<div>
+<h3 class="text-white font-bold text-lg">Global Nodes</h3>
+<p class="text-primary text-xs font-bold uppercase tracking-widest">12 Active Sectors</p>
+</div>
+<button class="bg-primary text-black px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 hover:scale-105 transition-transform">
+                        OPEN MAP <span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Recent Intel/Logs -->
+<div class="rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 p-6">
+<h3 class="text-lg font-bold dark:text-white mb-4">Command Logs</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-white/10">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">bolt</span>
+</div>
+<div class="flex-1">
+<h4 class="text-sm font-bold dark:text-white">Energy Grid Optimized</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Sector 7-G reported 15% efficiency gain.</p>
+</div>
+<span class="text-[10px] font-bold text-slate-400">2M AGO</span>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-white/10">
+<div class="size-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+<span class="material-symbols-outlined text-xl">security</span>
+</div>
+<div class="flex-1">
+<h4 class="text-sm font-bold dark:text-white">New Unit Assigned</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Operative 'K-Zero' linked to the network.</p>
+</div>
+<span class="text-[10px] font-bold text-slate-400">14M AGO</span>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-white/10">
+<div class="size-10 rounded-full bg-rose-500/20 flex items-center justify-center text-rose-400">
+<span class="material-symbols-outlined text-xl">warning</span>
+</div>
+<div class="flex-1">
+<h4 class="text-sm font-bold dark:text-white">Sync Latency Detected</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Deep-space relay nodes showing 40ms delay.</p>
+</div>
+<span class="text-[10px] font-bold text-slate-400">1H AGO</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-background-dark/80 backdrop-blur-xl border-t border-slate-200 dark:border-white/10 px-6 pb-6 pt-3 z-50">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="size-12 rounded-2xl flex items-center justify-center bg-primary text-black shadow-[0_0_20px_rgba(255,255,0,0.4)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">dashboard</span>
+</div>
+<span class="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-tighter">Command</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="size-12 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[28px]">group</span>
+</div>
+<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">Units</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="size-12 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[28px]">public</span>
+</div>
+<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">Global</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="size-12 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[28px]">settings</span>
+</div>
+<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">System</span>
+</a>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ADMA Communities - Nexus Command</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#ffff00",
+                    "background-light": "#f8f8f5",
+                    "background-dark": "#0a0a05",
+                },
+                fontFamily: {
+                    "display": ["Space Grotesk", "sans-serif"]
+                },
+            },
+        }
+    }
+</script>
+<style>
+    body { font-family: 'Space Grotesk', sans-serif; }
+    .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    .neon-glow { box-shadow: 0 0 30px rgba(255, 255, 0, 0.15); }
+</style>
+</head>
+<body class="bg-background-dark text-slate-100 min-h-screen flex flex-col">
+
+<!-- ==================== LOGIN VIEW ==================== -->
+<div id="loginView" class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full border-2 border-primary p-1 mb-4 neon-glow">
+                <span class="material-symbols-outlined text-4xl text-primary">hub</span>
+            </div>
+            <h1 class="text-4xl font-bold tracking-tight">ADMA</h1>
+            <p class="text-primary text-sm font-bold uppercase tracking-[0.3em] mt-1">Communities</p>
+        </div>
+        
+        <div class="glass-card rounded-2xl p-8 neon-glow">
+            <h2 class="text-xl font-bold mb-6 text-center">Iniciar Sesión</h2>
+            
+            <form id="loginForm" class="space-y-4">
+                <input type="email" id="email" placeholder="Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none" required>
+                <input type="password" id="password" placeholder="Contraseña" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none" required>
+                <button type="submit" class="w-full bg-primary text-black font-bold py-3 px-4 rounded-xl hover:brightness-110 transition">Entrar</button>
+            </form>
+            
+            <p class="text-center mt-6 text-slate-400 text-sm">¿No tienes cuenta? <a href="#" id="showRegister" class="text-primary hover:underline">Regístrate</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== REGISTER VIEW ==================== -->
+<div id="registerView" class="hidden min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full border-2 border-primary p-1 mb-4 neon-glow">
+                <span class="material-symbols-outlined text-4xl text-primary">person_add</span>
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight">Crear Cuenta</h1>
+            <p class="text-primary text-sm font-bold uppercase tracking-[0.3em] mt-1">Únete a ADMA</p>
+        </div>
+        
+        <div class="glass-card rounded-2xl p-8 neon-glow">
+            <form id="registerForm" class="space-y-4">
+                <input type="text" id="regNombre" placeholder="Tu nombre" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none" required>
+                <input type="email" id="regEmail" placeholder="Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none" required>
+                <input type="password" id="regPassword" placeholder="Contraseña" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none" required>
+                <input type="tel" id="regTelefono" placeholder="Número de celular" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none" required>
+                
+                <!-- Comunidad -->
+                <div class="pt-4 border-t border-white/10">
+                    <label class="text-slate-400 text-sm block mb-2">Selecciona tu Comunidad</label>
+                    <select id="regComunidad" class="w-full bg-gray-900 border border-white/20 rounded-xl px-4 py-3 text-white focus:border-primary focus:outline-none" required style="background-color: #1a1a1a;">
+                        <option value="">-- Seleccionar --</option>
+                    </select>
+                </div>
+                
+                <!-- Países -->
+                <div class="pt-4 border-t border-white/10">
+                    <label class="text-slate-400 text-sm block mb-2">Países donde vendes</label>
+                    <div class="grid grid-cols-2 gap-2" id="paisesContainer">
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="COLOMBIA" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Colombia</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="MEXICO" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">México</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="PANAMA" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Panamá</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="ECUADOR" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Ecuador</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="PARAGUAY" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Paraguay</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="PERU" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Perú</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="CHILE" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Chile</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="REPUBLICA DOMINICANA" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">R. Dominicana</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="GUATEMALA" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Guatemala</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="COSTA RICA" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Costa Rica</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="SALVADOR" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">El Salvador</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="HONDURAS" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Honduras</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="EUROPA" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">Europa</div>
+                        </label>
+                        <label class="relative">
+                            <input type="checkbox" name="pais" value="ESTADOS UNIDOS" class="peer sr-only">
+                            <div class="px-4 py-2 bg-white/5 rounded-lg text-center text-sm cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 transition">EE.UU.</div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Tipo de venta -->
+                <div class="pt-4 border-t border-white/10">
+                    <label class="text-slate-400 text-sm block mb-2">Tipo de venta</label>
+                    <div class="flex gap-3">
+                        <label class="relative flex-1">
+                            <input type="checkbox" name="tipoVenta" value="WHATSAPP" class="peer sr-only">
+                            <div class="px-4 py-3 bg-white/5 rounded-xl text-center font-bold cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-400 transition">WhatsApp</div>
+                        </label>
+                        <label class="relative flex-1">
+                            <input type="checkbox" name="tipoVenta" value="LANDING" class="peer sr-only">
+                            <div class="px-4 py-3 bg-white/5 rounded-xl text-center font-bold cursor-pointer border border-white/10 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-400 transition">Landing</div>
+                        </label>
+                    </div>
+                </div>
+                
+                
+                <button type="submit" class="w-full bg-primary text-black font-bold py-3 px-4 rounded-xl hover:brightness-110 transition mt-4">Crear Cuenta</button>
+            </form>
+            <p class="text-center mt-6 text-slate-400 text-sm">¿Ya tienes cuenta? <a href="#" id="showLogin" class="text-primary hover:underline">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SELECT COMUNIDAD VIEW ==================== -->
+<div id="selectComunidadView" class="hidden min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full border-2 border-primary p-1 mb-4 neon-glow">
+                <span class="material-symbols-outlined text-4xl text-primary">groups</span>
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight">Selecciona tu</h1>
+            <p class="text-primary text-sm font-bold uppercase tracking-[0.3em] mt-1">Comunidad</p>
+        </div>
+        
+        <div id="comunidadesList" class="space-y-3"></div>
+        
+        <p class="text-center mt-6 text-slate-500 text-sm">¿Tienes código? <a href="#" id="showWithCode" class="text-primary hover:underline">Ingrésalo aquí</a></p>
+    </div>
+</div>
+
+<!-- ==================== ENTER CODE VIEW ==================== -->
+<div id="enterCodeView" class="hidden min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full border-2 border-primary p-1 mb-4 neon-glow">
+                <span class="material-symbols-outlined text-4xl text-primary">vpn_key</span>
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight">Código de</h1>
+            <p class="text-primary text-sm font-bold uppercase tracking-[0.3em] mt-1">Invitación</p>
+        </div>
+        
+        <div class="glass-card rounded-2xl p-8 neon-glow">
+            <form id="codeForm" class="space-y-4">
+                <input type="text" id="inviteCode" placeholder="Ej: COLOMBIA-24" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none text-center text-xl uppercase tracking-widest" required>
+                <button type="submit" class="w-full bg-primary text-black font-bold py-3 px-4 rounded-xl hover:brightness-110 transition">Continuar</button>
+            </form>
+            <p class="text-center mt-6 text-slate-400 text-sm"><a href="#" id="backToSelect" class="text-primary hover:underline">← Volver</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== USER DASHBOARD ==================== -->
+<div id="userDashboard" class="hidden flex h-screen overflow-hidden">
+    <aside id="userSidebar" class="fixed md:relative w-64 -translate-x-full md:translate-x-0 md:w-56 bg-black/95 border-r border-white/10 flex flex-col p-4 z-50 transition-transform duration-300 h-full">
+        <button id="closeSidebarBtn" class="md:hidden absolute top-4 right-4 p-1 rounded bg-white/10 text-white">
+            <span class="material-symbols-outlined text-sm">close</span>
+        </button>
+        <div class="text-center mb-4">
+            <div class="size-20 mx-auto rounded-full border-2 border-primary p-1 mb-3">
+                <img id="userAvatar" src="" class="w-full h-full rounded-full bg-cover bg-center">
+            </div>
+            <h2 class="font-bold text-lg" id="userName">Usuario</h2>
+            <p class="text-xs text-primary uppercase tracking-wider" id="userComunidad">Comunidad</p>
+            <img id="userComunidadLogo" src="" class="hidden mt-2 mx-auto h-10 w-auto max-w-[120px] object-contain" alt="Logo comunidad" />
+        </div>
+        <div class="flex-1">
+            <div class="bg-white/5 rounded-xl p-3 text-center mb-3">
+                <p class="text-2xl font-bold" id="userRanking">#-</p>
+                <p class="text-[10px] text-slate-400 uppercase">Posición en comunidad</p>
+            </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-white/10 space-y-2">
+            <button onclick="showView('perfilSection')" class="w-full py-2 rounded-xl bg-primary/20 hover:bg-primary/30 text-primary text-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-lg">edit</span> Editar Perfil
+            </button>
+            <button id="logoutBtn" class="w-full py-2 rounded-xl bg-white/10 hover:bg-red-500/20 hover:text-red-400 text-slate-400 text-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-lg">logout</span> Salir
+            </button>
+        </div>
+    </aside>
+    <main class="flex-1 overflow-y-auto p-4 md:p-6">
+        <button id="menuToggleBtn" class="md:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-primary text-black">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <h2 class="text-xl font-bold mb-4">Mis Retos</h2>
+        <div class="grid grid-cols-3 gap-2 md:gap-3 mb-4 md:mb-6">
+            <div class="bg-white/5 rounded-xl p-2 md:p-3 text-center min-w-0">
+                <p class="text-[clamp(1rem,5vw,1.75rem)] font-bold text-primary leading-none truncate" id="statVentas" title="0">0</p>
+                <p class="text-[8px] md:text-[10px] text-slate-400">Órdenes</p>
+            </div>
+            <div class="bg-white/5 rounded-xl p-2 md:p-3 text-center min-w-0">
+                <p class="text-[clamp(1rem,5vw,1.75rem)] font-bold text-primary leading-none truncate" id="statFacturacion" title="$0">$0</p>
+                <p class="text-[8px] md:text-[10px] text-slate-400">Facturación</p>
+            </div>
+            <div class="bg-white/5 rounded-xl p-2 md:p-3 text-center min-w-0">
+                <p class="text-[clamp(1rem,5vw,1.75rem)] font-bold text-primary leading-none truncate" id="statGuias" title="0">0</p>
+                <p class="text-[8px] md:text-[10px] text-slate-400">Guías</p>
+            </div>
+        </div>
+        <div id="userRetosList" class="space-y-3"></div>
+        
+        <!-- Top 10 visible on mobile -->
+        <div class="md:hidden mt-6">
+            <h3 class="font-bold mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">emoji_events</span>
+                Top 10
+            </h3>
+            <div id="userTop10ListMobile" class="space-y-2"></div>
+        </div>
+    </main>
+    <aside class="hidden md:block w-72 bg-black/40 border-l border-white/10 p-4 overflow-y-auto">
+        <h3 class="font-bold mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">emoji_events</span>
+            Top 10
+        </h3>
+        <div id="userTop10List" class="space-y-2"></div>
+    </aside>
+    <div id="top10Modal" class="hidden fixed inset-0 z-50 bg-black/70 p-4">
+        <div class="max-w-xl mx-auto mt-16 bg-[#12120b] border border-white/10 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+                <h4 class="font-bold text-lg" id="top10Title">Top 10</h4>
+                <button id="closeTop10Btn" class="text-xs bg-white/10 px-2 py-1 rounded">Cerrar</button>
+            </div>
+            <div id="top10Body" class="space-y-2"></div>
+        </div>
+    </div>
+</div>
+
+<div id="liderDashboard" class="hidden min-h-screen bg-[#070704] text-slate-100">
+  <header class="sticky top-0 z-20 border-b border-white/10 bg-[#0a0a05]/90 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="size-10 rounded-xl bg-primary text-black flex items-center justify-center"><span class="material-symbols-outlined">hub</span></div>
+        <div>
+          <p class="text-[11px] tracking-[0.22em] text-primary font-black">COMMUNITY NEXUS</p>
+          <p class="text-xs text-slate-400 uppercase tracking-[0.16em]">Leader Console</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[10px] text-yellow-400 font-bold">BUILD 02:26</span>
+        <p class="text-sm font-bold" id="liderNameHeader">-</p>
+        <img id="liderAvatar" src="" class="size-10 rounded-xl border border-primary/60 object-cover" />
+        <button id="liderLogoutBtn" class="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm">Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto w-full px-6 py-6 space-y-6">
+    <nav class="flex flex-wrap gap-2">
+      <a id="navDashboard" href="#" class="px-4 py-2 rounded-lg bg-primary text-black font-semibold">Dashboard</a>
+      <a id="navMisUsuarios" href="#" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200">Mis Usuarios</a>
+      <a id="navRetos" href="#" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200">Crear Retos</a>
+    </nav>
+
+    <section id="liderHomeSection" class="space-y-6">
+      <div class="rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/10 via-white/5 to-black/30 p-6 shadow-[0_0_25px_rgba(255,255,0,0.08)]">
+        <div class="flex flex-col md:flex-row items-center gap-5">
+          <div class="relative">
+            <img id="liderHeroAvatar" src="" class="size-28 rounded-2xl border-2 border-primary object-cover shadow-[0_0_30px_rgba(255,255,0,0.35)]" />
+            <span class="absolute -bottom-2 -right-2 text-[10px] px-2 py-1 rounded-full bg-primary text-black font-bold">LÍDER</span>
+          </div>
+          <div class="flex-1 text-center md:text-left">
+            <p id="liderHeroName" class="text-2xl font-black">-</p>
+            <p id="liderHeroSubtitle" class="text-primary text-xs uppercase tracking-[0.2em] font-bold mt-1">Community Leader</p>
+            <p id="liderHeroCommunity" class="text-slate-400 text-sm mt-2">Comunidad: -</p>
+          </div>
+          <button id="goPerfilBtn" class="px-4 py-2 rounded-lg bg-primary text-black font-bold">Editar perfil</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="rounded-2xl border border-primary/30 bg-gradient-to-b from-primary/10 to-transparent p-5">
+          <p class="text-xs uppercase tracking-widest text-slate-400">Miembros Activos</p>
+          <p class="text-4xl md:text-5xl lg:text-6xl font-black text-primary mt-2 leading-none truncate" id="liderMembers">0</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+          <p class="text-xs uppercase tracking-widest text-slate-400">Ventas Totales</p>
+          <p class="text-3xl md:text-4xl lg:text-5xl font-black mt-2 leading-none truncate" id="liderVentas">0</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+          <p class="text-xs uppercase tracking-widest text-slate-400">Facturación</p>
+          <p class="text-2xl md:text-3xl lg:text-4xl font-black mt-2 leading-none truncate" id="liderFacturacion">$0</p>
+        </div>
+      </div>
+
+      <div id="comunidadesSection" class="rounded-2xl border border-white/10 bg-white/5 p-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <h3 class="text-xl font-bold">Mis Comunidades</h3>
+          <div class="flex gap-2">
+            <button id="registrarMiembroBtn" class="bg-white/10 text-white font-bold px-4 py-2 rounded-lg text-sm">+ Registrar miembro</button>
+            <button id="createComunidadBtn" class="bg-primary text-black font-bold px-4 py-2 rounded-lg text-sm">+ Nueva Comunidad</button>
+          </div>
+        </div>
+        <div id="liderComunidades" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+        <h3 class="text-xl font-bold mb-4">Top 10 mejores usuarios</h3>
+        <div id="top10Usuarios" class="space-y-2"></div>
+      </div>
+    </section>
+
+    <section id="usuariosSection" class="hidden rounded-2xl border border-white/10 bg-white/5 p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold" id="communityTitle">COMMUNITY</h3>
+      </div>
+      <div class="mb-4 relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+        <input id="userSearch" class="w-full pl-9 pr-3 py-2 bg-black/30 border border-white/10 rounded-lg text-sm" placeholder="Buscar usuarios por nombre o correo..." />
+      </div>
+      <div id="liderUsuariosGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"></div>
+    </section>
+
+    <section id="retosSection" class="hidden rounded-2xl border border-white/10 bg-white/5 p-5">
+      <h3 class="text-xl font-bold mb-4">Crear Reto</h3>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input id="retoTitulo" class="bg-black/30 border border-white/10 rounded-lg px-3 py-2" placeholder="Título del reto" />
+          <select id="retoTipo" class="bg-black/30 border border-white/10 rounded-lg px-3 py-2">
+            <option value="facturacion">Facturación</option>
+            <option value="unidades">Unidades vendidas</option>
+            <option value="guias">Guías</option>
+          </select>
+          <input id="retoMeta" type="number" class="bg-black/30 border border-white/10 rounded-lg px-3 py-2" placeholder="Meta" />
+          <select id="retoComunidad" class="bg-black/30 border border-white/10 rounded-lg px-3 py-2"></select>
+          <input id="retoInicio" type="date" class="bg-black/30 border border-white/10 rounded-lg px-3 py-2" />
+          <input id="retoFin" type="date" class="bg-black/30 border border-white/10 rounded-lg px-3 py-2" />
+        </div>
+        <div class="rounded-xl border border-white/10 bg-black/30 p-3">
+          <p class="text-sm font-semibold mb-2">Imagen del reto</p>
+          <img id="retoImagenPreview" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800" class="w-full h-36 object-cover rounded-lg border border-white/10 mb-2" />
+          <input id="retoImagenUrl" class="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm mb-2" placeholder="URL de imagen (opcional)" />
+          <label for="retoImagenFile" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/20 border border-primary/40 text-primary text-xs font-bold cursor-pointer hover:bg-primary/30 transition">
+            <span class="material-symbols-outlined text-sm">upload</span>
+            Seleccionar archivo
+          </label>
+          <input id="retoImagenFile" type="file" accept="image/*" class="hidden" />
+        </div>
+      </div>
+      <textarea id="retoDesc" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 mb-3" rows="2" placeholder="Descripción"></textarea>
+      <button id="crearRetoBtn" class="bg-primary text-black font-bold px-4 py-2 rounded-lg">Crear reto</button>
+
+      <div class="flex items-center justify-between mt-6 mb-3">
+        <h4 class="text-lg font-bold">Retos activos</h4>
+        <button id="recalcRetosBtn" class="text-xs bg-white/10 px-3 py-1 rounded hover:bg-white/20">Recalcular ranking</button>
+      </div>
+      <div id="retosList" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div>
+    </section>
+
+    <section id="perfilSection" class="hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-black/70 to-black/40 p-6 shadow-[0_0_30px_rgba(255,255,0,0.08)]">
+      <div class="flex items-center gap-4 mb-5">
+        <img id="perfilFotoPreview" src="" class="size-24 rounded-2xl border-2 border-primary object-cover shadow-[0_0_20px_rgba(255,255,0,0.25)]" />
+        <div>
+          <h3 class="text-2xl font-black">Mi Perfil</h3>
+          <p class="text-xs uppercase tracking-[0.18em] text-primary">Community Leader</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="space-y-3">
+          <input id="perfilUsername" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2" placeholder="Nombre de usuario" />
+          <input id="perfilSlogan" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2" placeholder="Slogan" />
+          <div class="grid grid-cols-2 gap-3">
+            <input id="perfilNombre" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2" placeholder="Nombre" />
+            <input id="perfilApellido" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2" placeholder="Apellido" />
+            <input id="perfilCedula" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2" placeholder="Cédula / ID" />
+            <input id="perfilCiudad" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2" placeholder="Ciudad" />
+          </div>
+          <input id="perfilDireccion" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2" placeholder="Dirección" />
+        </div>
+
+        <div class="space-y-3">
+          <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+            <p class="text-sm font-semibold mb-2">Foto de perfil</p>
+            <input id="perfilFotoUrl" class="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-sm mb-2" placeholder="URL de foto (opcional)" />
+            <p id="perfilFotoHint" class="text-[11px] text-slate-400 mb-2"></p>
+            <div class="flex items-center gap-2">
+              <label for="perfilFotoFile" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/20 border border-primary/40 text-primary text-xs font-bold cursor-pointer hover:bg-primary/30 transition">
+                <span class="material-symbols-outlined text-sm">upload</span>
+                Seleccionar archivo
+              </label>
+              <span id="perfilFotoFileName" class="text-xs text-slate-400">Ningún archivo</span>
+            </div>
+            <input id="perfilFotoFile" type="file" accept="image/*" class="hidden" />
+          </div>
+          <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+            <p class="text-sm text-slate-400 mb-2">Países de operación</p>
+            <div class="grid grid-cols-2 gap-2" id="perfilPaises">
+              <label class="relative"><input type="checkbox" name="perfilPais" value="COLOMBIA" class="peer sr-only"><div class="px-3 py-2 rounded-lg text-center text-sm cursor-pointer border border-white/10 bg-black/30 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-300 transition">Colombia</div></label>
+              <label class="relative"><input type="checkbox" name="perfilPais" value="MEXICO" class="peer sr-only"><div class="px-3 py-2 rounded-lg text-center text-sm cursor-pointer border border-white/10 bg-black/30 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-300 transition">México</div></label>
+              <label class="relative"><input type="checkbox" name="perfilPais" value="PANAMA" class="peer sr-only"><div class="px-3 py-2 rounded-lg text-center text-sm cursor-pointer border border-white/10 bg-black/30 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-300 transition">Panamá</div></label>
+              <label class="relative"><input type="checkbox" name="perfilPais" value="ECUADOR" class="peer sr-only"><div class="px-3 py-2 rounded-lg text-center text-sm cursor-pointer border border-white/10 bg-black/30 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-300 transition">Ecuador</div></label>
+              <label class="relative"><input type="checkbox" name="perfilPais" value="PERU" class="peer sr-only"><div class="px-3 py-2 rounded-lg text-center text-sm cursor-pointer border border-white/10 bg-black/30 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-300 transition">Perú</div></label>
+              <label class="relative"><input type="checkbox" name="perfilPais" value="CHILE" class="peer sr-only"><div class="px-3 py-2 rounded-lg text-center text-sm cursor-pointer border border-white/10 bg-black/30 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-300 transition">Chile</div></label>
+              <label class="relative"><input type="checkbox" name="perfilPais" value="EUROPA" class="peer sr-only"><div class="px-3 py-2 rounded-lg text-center text-sm cursor-pointer border border-white/10 bg-black/30 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-300 transition">Europa</div></label>
+              <label class="relative"><input type="checkbox" name="perfilPais" value="USA" class="peer sr-only"><div class="px-3 py-2 rounded-lg text-center text-sm cursor-pointer border border-white/10 bg-black/30 peer-checked:border-yellow-400 peer-checked:bg-yellow-400/20 peer-checked:text-yellow-300 transition">USA</div></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-4">
+        <button id="savePerfilBtn" class="bg-primary text-black font-bold px-4 py-2 rounded-lg">Guardar cambios</button>
+        <button id="cancelPerfilBtn" class="bg-white/10 px-4 py-2 rounded-lg">Cancelar</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ==================== ADMIN DASHBOARD ==================== -->
+<div id="adminDashboard" class="hidden">
+    <header class="flex items-center justify-between p-4 sticky top-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-primary/30">
+        <div class="flex items-center gap-3">
+            <div class="size-10 rounded-full border-2 border-primary p-0.5 bg-primary/10">
+                <span class="material-symbols-outlined text-2xl text-primary w-full h-full flex items-center justify-center">admin_panel_settings</span>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold tracking-tight">ADMIN PANEL</h1>
+                <p class="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">ADMA Communities</p>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button class="size-10 flex items-center justify-center rounded-xl bg-white/5 text-slate-400 hover:text-primary"><span class="material-symbols-outlined">settings</span></button>
+            <button id="adminLogoutBtn" class="size-10 flex items-center justify-center rounded-xl bg-white/5 text-slate-400 hover:text-red-400"><span class="material-symbols-outlined">logout</span></button>
+        </div>
+    </header>
+    
+
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="glass-card rounded-2xl p-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 p-4">
+            <div class="glass-card p-4 rounded-xl">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Total Líderes</p>
+                <p class="text-2xl font-bold text-primary mt-1" id="adminLideres">0</p>
+            </div>
+            <div class="glass-card p-4 rounded-xl">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Comunidades</p>
+                <p class="text-2xl font-bold mt-1" id="adminComunidades">0</p>
+            </div>
+            <div class="glass-card p-4 rounded-xl">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Usuarios</p>
+                <p class="text-2xl font-bold mt-1" id="adminUsuarios">0</p>
+            </div>
+            <div class="glass-card p-4 rounded-xl">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Ventas</p>
+                <p class="text-2xl font-bold mt-1" id="adminVentas">0</p>
+            </div>
+        </div>
+
+        <h3 class="text-xl font-bold mb-4">Crear Líder</h3>
+                <form id="createLiderForm" class="space-y-3">
+                    <input type="text" id="liderNombre" placeholder="Nombre del líder" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white placeholder-slate-500" required>
+                    <input type="email" id="liderEmail" placeholder="Email del líder" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white placeholder-slate-500" required>
+                    <button type="submit" class="w-full bg-primary text-black font-bold py-2 rounded-xl">Crear Líder</button>
+                </form>
+            </div>
+            
+            <div class="glass-card rounded-2xl p-6">
+                <h3 class="text-xl font-bold mb-2">Importar Ventas (Excel)</h3>
+                <p class="text-xs text-slate-400 mb-3">Upsert por ID: si existe actualiza, si no existe crea.</p>
+                <input type="file" id="excelFile" accept=".xlsx,.xls" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white mb-3">
+                <div id="importMapping" class="space-y-2 mb-3"></div>
+                <div class="flex gap-2 mb-2">
+                  <button id="saveMappingBtn" class="flex-1 bg-white/10 text-white font-bold py-2 rounded-xl text-xs">Guardar mapeo</button>
+                  <button id="loadMappingBtn" class="flex-1 bg-white/10 text-white font-bold py-2 rounded-xl text-xs">Cargar mapeo</button>
+                </div>
+                <button id="importBtn" class="w-full bg-primary text-black font-bold py-2 rounded-xl">Importar</button>
+                <div id="importProgress" class="mt-2 text-xs text-slate-400"></div>
+                <div id="importReport" class="mt-3 text-xs text-slate-300"></div>
+            </div>
+        </div>
+        
+        <div class="glass-card rounded-2xl p-6">
+            <h3 class="text-xl font-bold mb-4">Lista de Líderes</h3>
+            <div id="lideresList" class="space-y-2"></div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6">
+            <h3 class="text-xl font-bold mb-4">Usuarios sin comunidad</h3>
+            <div id="usuariosSinComunidadList" class="space-y-2"></div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6">
+            <h3 class="text-xl font-bold mb-4">Comunidades (Admin)</h3>
+            <div id="comunidadesAdminList" class="space-y-2"></div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6">
+            <h3 class="text-xl font-bold mb-4">Retos (Admin)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <input id="adminRetoTitulo" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2" placeholder="Título del reto" />
+                <select id="adminRetoTipo" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+                    <option value="facturacion">Facturación</option>
+                    <option value="unidades">Unidades</option>
+                    <option value="guias">Guías</option>
+                </select>
+                <input id="adminRetoMeta" type="number" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2" placeholder="Meta" />
+                <select id="adminRetoComunidad" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2"></select>
+                <input id="adminRetoInicio" type="date" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2" />
+                <input id="adminRetoFin" type="date" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2" />
+            </div>
+            <input id="adminRetoImagen" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 mb-3" placeholder="URL de imagen (opcional)" />
+            <textarea id="adminRetoDesc" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 mb-3" rows="2" placeholder="Descripción"></textarea>
+            <div class="flex flex-wrap gap-2 items-center">
+              <button id="crearAdminRetoBtn" class="bg-primary text-black font-bold px-4 py-2 rounded-lg">Crear reto (Admin)</button>
+              <select id="adminRetoFilterComunidad" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm"></select>
+              <select id="adminRetoFilterEstado" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm">
+                <option value="">Todos los estados</option>
+                <option value="activo">Activo</option>
+                <option value="pausado">Pausado</option>
+                <option value="cerrado">Cerrado</option>
+              </select>
+              <input id="adminRetoSearch" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm min-w-[220px]" placeholder="Buscar por título o descripción" />
+              <select id="adminRetoSort" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm">
+                <option value="newest">Más nuevos</option>
+                <option value="oldest">Más antiguos</option>
+                <option value="meta_desc">Meta (mayor a menor)</option>
+                <option value="meta_asc">Meta (menor a mayor)</option>
+                <option value="estado">Estado</option>
+              </select>
+            </div>
+            <div id="adminRetosList" class="space-y-2 mt-4"></div>
+            <div class="mt-3 flex items-center justify-between text-sm">
+              <button id="adminRetosPrevBtn" class="px-3 py-1 rounded bg-white/10">← Anterior</button>
+              <span id="adminRetosPageInfo" class="text-slate-400">Página 1</span>
+              <button id="adminRetosNextBtn" class="px-3 py-1 rounded bg-white/10">Siguiente →</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Assign Comunidad Modal -->
+<div id="assignComunidadModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4">
+  <div class="glass-card rounded-2xl p-6 w-full max-w-md">
+    <h3 class="text-xl font-bold mb-4">Asignar comunidad</h3>
+    <input type="hidden" id="assignUserId">
+    <p id="assignUserEmail" class="text-sm text-slate-400 mb-3"></p>
+    <select id="assignComunidadSelect" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white"></select>
+    <div class="flex gap-3 mt-4">
+      <button id="saveAssignComunidadBtn" class="flex-1 bg-primary text-black font-bold py-2 rounded-xl">Asignar</button>
+      <button id="closeAssignComunidadBtn" class="px-4 bg-white/10 text-white font-bold py-2 rounded-xl">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Comunidad Modal -->
+<div id="editComunidadModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4">
+  <div class="glass-card rounded-2xl p-6 w-full max-w-md">
+    <h3 class="text-xl font-bold mb-4">Editar Comunidad</h3>
+    <input type="hidden" id="editComunidadId" />
+    <div class="space-y-3">
+      <input type="text" id="editComunidadNombre" placeholder="Nombre" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white">
+      <input type="text" id="editComunidadCodigo" placeholder="Código" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white uppercase">
+      <input type="text" id="editComunidadLogo" placeholder="URL Logo" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white">
+      <label for="editComunidadLogoFile" class="flex items-center justify-center gap-2 w-full bg-primary/20 hover:bg-primary/30 border border-primary/30 rounded-xl px-4 py-2 text-primary cursor-pointer transition"><span class="material-symbols-outlined text-lg">upload</span>Cambiar imagen</label><input type="file" id="editComunidadLogoFile" accept="image/*" class="hidden">
+    </div>
+    <div class="flex gap-3 mt-4">
+      <button id="saveComunidadEditBtn" class="flex-1 bg-primary text-black font-bold py-2 rounded-xl">Guardar</button>
+      <button id="closeComunidadEditBtn" class="px-4 bg-white/10 text-white font-bold py-2 rounded-xl">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Leader Modal -->
+<div id="editLiderModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4">
+    <div class="glass-card rounded-2xl p-6 w-full max-w-md">
+        <h3 class="text-xl font-bold mb-4">Editar Líder</h3>
+        <input type="hidden" id="editLiderId">
+        <div class="space-y-3">
+            <input type="text" id="editLiderNombre" placeholder="Nombre" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white">
+            <div class="flex gap-2">
+                <input type="email" id="editLiderEmail" placeholder="Email" class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white">
+                <button type="button" id="resetPasswordBtn" class="bg-yellow-400/20 text-yellow-400 px-3 rounded-xl text-sm hover:bg-yellow-400/30" title="Enviar link para resetear contraseña">
+                    <span class="material-symbols-outlined text-lg">lock_reset</span>
+                </button>
+            </div>
+            
+            <div class="border-t border-white/10 pt-3">
+                <label class="text-slate-400 text-sm block mb-2">Comunidades del líder</label>
+                <div id="editComunidadesList" class="space-y-2 max-h-40 overflow-y-auto"></div>
+                <button type="button" id="addComunidadBtn" class="mt-2 text-yellow-400 text-sm">+ Agregar comunidad</button>
+            </div>
+        </div>
+        <div class="flex gap-3 mt-4">
+            <button id="saveLiderBtn" class="flex-1 bg-primary text-black font-bold py-2 rounded-xl">Guardar</button>
+            <button id="closeModalBtn" class="px-4 bg-white/10 text-white font-bold py-2 rounded-xl">Cancelar</button>
+            <button id="deleteLiderBtn" class="px-4 bg-red-600 text-white font-bold py-2 rounded-xl">Eliminar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Reto Admin Modal -->
+<div id="editAdminRetoModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4">
+  <div class="glass-card rounded-2xl p-6 w-full max-w-lg">
+    <h3 class="text-xl font-bold mb-4">Editar Reto (Admin)</h3>
+    <input type="hidden" id="editAdminRetoId" />
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <input id="editAdminRetoTitulo" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2" placeholder="Título" />
+      <select id="editAdminRetoTipo" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+        <option value="facturacion">Facturación</option>
+        <option value="unidades">Unidades</option>
+        <option value="guias">Guías</option>
+      </select>
+      <input id="editAdminRetoMeta" type="number" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2" placeholder="Meta" />
+      <select id="editAdminRetoEstado" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+        <option value="activo">Activo</option>
+        <option value="pausado">Pausado</option>
+        <option value="cerrado">Cerrado</option>
+      </select>
+      <input id="editAdminRetoInicio" type="date" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2" />
+      <input id="editAdminRetoFin" type="date" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2" />
+    </div>
+    <input id="editAdminRetoImagen" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 mt-3" placeholder="URL imagen" />
+    <textarea id="editAdminRetoDesc" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 mt-3" rows="2" placeholder="Descripción"></textarea>
+    <div class="flex gap-3 mt-4">
+      <button id="saveEditAdminRetoBtn" class="flex-1 bg-primary text-black font-bold py-2 rounded-xl">Guardar</button>
+      <button id="closeEditAdminRetoBtn" class="px-4 bg-white/10 text-white font-bold py-2 rounded-xl">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Registrar Miembro Modal -->
+<div id="registrarMiembroModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4">
+  <div class="glass-card rounded-2xl p-6 w-full max-w-md">
+    <h3 class="text-xl font-bold mb-4">Registrar Miembro</h3>
+    <div class="space-y-3">
+      <input type="text" id="miembroNombre" placeholder="Nombre" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white">
+      <input type="email" id="miembroEmail" placeholder="Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white" required>
+      <input type="tel" id="miembroTelefono" placeholder="Número de celular" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white" required>
+      <select id="miembroComunidad" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white"></select>
+    </div>
+    <p class="text-xs text-slate-400 mt-3">Se enviará correo para que el miembro cree su contraseña.</p>
+    <div class="flex gap-3 mt-4">
+      <button id="saveMiembroBtn" class="flex-1 bg-primary text-black font-bold py-2 rounded-xl">Crear miembro</button>
+      <button id="closeMiembroModalBtn" class="px-4 bg-white/10 text-white font-bold py-2 rounded-xl">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Create Comunidad Modal -->
+<div id="createComunidadModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4">
+    <div class="glass-card rounded-2xl p-6 w-full max-w-md">
+        <h3 class="text-xl font-bold mb-4">Crear Nueva Comunidad</h3>
+        <div class="space-y-3">
+            <input type="text" id="newComunidadNombre" placeholder="Nombre de la comunidad" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white" required>
+            <input type="text" id="newComunidadCodigo" placeholder="Código único (ej: COLOMBIA-24)" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white uppercase" required>
+            <input type="text" id="newComunidadLogo" placeholder="URL del logo (opcional)" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white">
+            <label for="newComunidadLogoFile" class="flex items-center justify-center gap-2 w-full bg-primary/20 hover:bg-primary/30 border border-primary/30 rounded-xl px-4 py-2 text-primary cursor-pointer transition"><span class="material-symbols-outlined text-lg">upload</span>Subir imagen</label><input type="file" id="newComunidadLogoFile" accept="image/*" class="hidden">
+        </div>
+        <div class="flex gap-3 mt-4">
+            <button id="saveComunidadBtn" class="flex-1 bg-primary text-black font-bold py-2 rounded-xl">Crear</button>
+            <button id="closeComunidadModalBtn" class="px-4 bg-white/10 text-white font-bold py-2 rounded-xl">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="/firebase.js"></script>
+
+<script>
+// Use auth and db from firebase.js
+
+// Views
+const views = {
+    login: document.getElementById('loginView'),
+    register: document.getElementById('registerView'),
+    selectComunidad: document.getElementById('selectComunidadView'),
+    enterCode: document.getElementById('enterCodeView'),
+    userDashboard: document.getElementById('userDashboard'),
+    liderDashboard: document.getElementById('liderDashboard'),
+    adminDashboard: document.getElementById('adminDashboard')
+};
+
+function showView(viewName) {
+    Object.values(views).forEach(v => v.classList.add('hidden'));
+    views[viewName].classList.remove('hidden');
+}
+
+// Navigate
+document.getElementById('showRegister').onclick = async () => {
+        showView('register');
+        // Load comunidades for selection
+        const comunidades = await db.collection('comunidades').orderBy('nombre').get();
+        const opciones = comunidades.docs.map(d => `<option value="${d.id}" data-codigo="${d.data().codigo}">${d.data().nombre}</option>`).join('');
+        document.getElementById('regComunidad').innerHTML = '<option value="">-- Seleccionar --</option>' + opciones;
+        
+        // Check for ?ref= parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('ref');
+        if (refCode) {
+            const select = document.getElementById('regComunidad');
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].dataset.codigo === refCode.toUpperCase()) {
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+    };
+document.getElementById('showLogin').onclick = () => showView('login');
+document.getElementById('showWithCode').onclick = () => showView('enterCode');
+document.getElementById('backToSelect').onclick = () => showView('selectComunidad');
+
+const userSearchInput = document.getElementById('userSearch');
+if (userSearchInput) {
+  userSearchInput.addEventListener('input', (e) => renderLiderUsers(e.target.value));
+}
+
+// Leader sidebar navigation (tabs)
+const navMisUsuarios = document.getElementById('navMisUsuarios');
+const navDashboard = document.getElementById('navDashboard');
+const navRetos = document.getElementById('navRetos');
+const liderHomeSection = document.getElementById('liderHomeSection');
+const usuariosSection = document.getElementById('usuariosSection');
+const retosSection = document.getElementById('retosSection');
+const perfilSection = document.getElementById('perfilSection');
+const goPerfilBtn = document.getElementById('goPerfilBtn');
+
+function setLeaderTab(tab) {
+  if (!liderHomeSection || !usuariosSection || !retosSection || !perfilSection || !navDashboard || !navMisUsuarios || !navRetos) return;
+  liderHomeSection.classList.add('hidden');
+  usuariosSection.classList.add('hidden');
+  retosSection.classList.add('hidden');
+  perfilSection.classList.add('hidden');
+  [navDashboard, navMisUsuarios, navRetos].forEach(el => {
+    el.classList.remove('bg-primary','text-black','font-semibold');
+    el.classList.add('bg-white/10','text-slate-200');
+  });
+
+  if (tab === 'usuarios') {
+    usuariosSection.classList.remove('hidden');
+    navMisUsuarios.classList.add('bg-primary','text-black','font-semibold'); navMisUsuarios.classList.remove('bg-white/10','text-slate-200');
+  } else if (tab === 'retos') {
+    retosSection.classList.remove('hidden');
+    navRetos.classList.add('bg-primary','text-black','font-semibold'); navRetos.classList.remove('bg-white/10','text-slate-200');
+  } else if (tab === 'perfil') {
+    perfilSection.classList.remove('hidden');
+  } else {
+    liderHomeSection.classList.remove('hidden');
+    navDashboard.classList.add('bg-primary','text-black','font-semibold'); navDashboard.classList.remove('bg-white/10','text-slate-200');
+  }
+}
+
+if (navMisUsuarios) navMisUsuarios.addEventListener('click', (e) => { e.preventDefault(); setLeaderTab('usuarios'); });
+if (navDashboard) navDashboard.addEventListener('click', (e) => { e.preventDefault(); setLeaderTab('dashboard'); });
+if (navRetos) navRetos.addEventListener('click', (e) => { e.preventDefault(); setLeaderTab('retos'); });
+if (goPerfilBtn) goPerfilBtn.addEventListener('click', (e) => { e.preventDefault(); setLeaderTab('perfil'); });
+
+// Email Login
+document.getElementById('loginForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    try {
+        const result = await auth.signInWithEmailAndPassword(email, password);
+        await handleAuth(result.user);
+    } catch(e) { alert('Error: ' + e.message); }
+};
+
+// Register
+document.getElementById('registerForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const nombre = document.getElementById('regNombre').value;
+    const email = document.getElementById('regEmail').value;
+    const password = document.getElementById('regPassword').value;
+    const telefono = document.getElementById('regTelefono').value;
+    
+    
+    // Get selected countries
+    const paises = Array.from(document.querySelectorAll('input[name="pais"]:checked')).map(cb => cb.value);
+    
+    // Get selected sale types
+    const tipoVenta = Array.from(document.querySelectorAll('input[name="tipoVenta"]:checked')).map(cb => cb.value);
+    
+    if (paises.length === 0) {
+        alert('Selecciona al menos un país donde vendes');
+        return;
+    }
+    
+    if (tipoVenta.length === 0) {
+        alert('Selecciona al menos un tipo de venta');
+        return;
+    }
+    
+    try {
+        const result = await auth.createUserWithEmailAndPassword(email, password);
+        const comunidadId = document.getElementById('regComunidad').value;
+    if (!comunidadId) return alert('Selecciona una comunidad');
+
+    await createOrUpdateUser(result.user.uid, {
+            nombre,
+            email,
+            telefono,
+            rol: 'usuario',
+            paises: paises,
+            tipoVenta: tipoVenta,
+            comunidadId,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        // Go directly to user dashboard after registration
+        await handleAuth(result.user);
+    } catch(e) { alert('Error: ' + e.message); }
+};
+
+// Code Form
+document.getElementById('codeForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const codigo = document.getElementById('inviteCode').value.toUpperCase();
+    const comunidad = await getComunidadByCode(codigo);
+    
+    if (comunidad && window.currentUser) {
+        await createOrUpdateUser(window.currentUser.uid, { comunidadId: comunidad.id });
+        await handleAuth(window.currentUser);
+    } else {
+        alert('Código inválido');
+    }
+};
+
+// Load comunidades for selection
+async function loadComunidades() {
+    const comunidades = await getComunidades();
+    const list = document.getElementById('comunidadesList');
+    list.innerHTML = comunidades.map(c => `
+        <button onclick="selectComunidad('${c.id}')" class="w-full glass-card p-4 rounded-xl hover:border-primary/50 transition text-left">
+            <p class="font-bold">${c.nombre}</p>
+            <p class="text-slate-400 text-sm">Código: ${c.codigo}</p>
+        </button>
+    `).join('');
+}
+
+window.selectComunidad = async function(comunidadId) {
+    if (window.currentUser) {
+        await createOrUpdateUser(window.currentUser.uid, { comunidadId });
+        await handleAuth(window.currentUser);
+    }
+};
+
+// Handle Auth
+async function handleAuth(user) {
+    // Check if admin
+    const adminDoc = await db.collection('admins').doc(user.uid).get();
+    if (adminDoc.exists) {
+        showView('adminDashboard');
+        loadAdminData();
+        return;
+    }
+    
+    // Check if lider
+    const liderDoc = await db.collection('lideres').doc(user.uid).get();
+    if (liderDoc.exists) {
+        showView('liderDashboard');
+        loadLiderData(user, liderDoc.data());
+        return;
+    }
+    
+    const userData = await getUserData(user.uid);
+    
+    if (!userData || !userData.rol) {
+        showView('selectComunidad');
+        window.currentUser = user;
+        loadComunidades();
+        return;
+    }
+    
+    showView('userDashboard');
+    loadUserData(user, userData);
+}
+
+// Load User Data
+async function loadUserData(user, userData) {
+    document.getElementById('userName').textContent = userData.nombre || user.displayName || user.email.split('@')[0];
+    document.getElementById('userAvatar').src = userData.foto || user.photoURL || 'https://www.gravatar.com/avatar?d=mp';
+    
+    if (userData.comunidadId) {
+        const comunidad = await getComunidad(userData.comunidadId);
+        document.getElementById('userComunidad').textContent = comunidad ? comunidad.nombre : '-';
+        const logoEl = document.getElementById('userComunidadLogo');
+        if (logoEl) {
+          if (comunidad?.logo) {
+            logoEl.src = comunidad.logo;
+            logoEl.classList.remove('hidden');
+          } else {
+            logoEl.classList.add('hidden');
+          }
+        }
+    }
+    
+    // Load ventas
+    const ventas = await getVentasByEmail(user.email);
+    const totalVentas = ventas.length;
+    const facturacion = ventas.reduce((sum, v) => sum + (parseFloat(v.totalOrden) || 0), 0);
+    const guias = ventas.filter(v => v.numeroGuia).length;
+    
+    const statVentasEl = document.getElementById('statVentas');
+    const statFactEl = document.getElementById('statFacturacion');
+    const statGuiasEl = document.getElementById('statGuias');
+
+    if (statVentasEl) {
+      statVentasEl.textContent = totalVentas;
+      statVentasEl.title = String(totalVentas);
+    }
+    if (statFactEl) {
+      statFactEl.textContent = formatMoneyCompact(facturacion);
+      statFactEl.title = '$' + facturacion.toLocaleString();
+    }
+    if (statGuiasEl) {
+      statGuiasEl.textContent = guias;
+      statGuiasEl.title = String(guias);
+    }
+
+    await loadUserRetos(user, userData);
+}
+
+async function computeUserRetoProgress(reto, email, enrolledAt, userId) {
+  const ventas = await getVentasByEmail(email || '');
+  const ini = parseDateISO(reto.inicio || '') || '';
+  const fin = parseDateISO(reto.fin || '') || '';
+  const en = enrolledAt ? parseDateISO(enrolledAt) : '';
+
+  const candidates = ventas.filter(v => {
+    const fv = parseDateISO(v.fecha || '') || '';
+    if (!fv) return false;
+    if (ini && fv < ini) return false;
+    if (fin && fv > fin) return false;
+    if (en && fv < en) return false;
+    return true;
+  });
+
+  // Exclusividad: una orden (lineKey) solo puede pertenecer a un reto
+  const valid = [];
+  for (const v of candidates) {
+    const orderKey = String(v.lineKey || v.id_pedido || '').trim();
+    if (!orderKey) continue;
+    const allocRef = db.collection('order_allocations').doc(orderKey);
+    const allocDoc = await allocRef.get();
+    if (!allocDoc.exists) {
+      await allocRef.set({
+        orderKey,
+        retoId: reto.id,
+        userId,
+        email,
+        assignedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      valid.push(v);
+    } else {
+      const a = allocDoc.data() || {};
+      if (a.retoId === reto.id && a.userId === userId) {
+        valid.push(v); // ya asignada a este mismo reto/usuario
+      }
+      // si está asignada a otro reto, no cuenta
+    }
+  }
+
+  let valor = 0;
+  const tipo = (reto.tipo || '').toLowerCase();
+  if (tipo.includes('unidad')) {
+    valor = valid.reduce((s, x) => s + (Number(x.cantidad) || 0), 0);
+  } else if (tipo.includes('guia')) {
+    valor = valid.length;
+  } else {
+    valor = valid.reduce((s, x) => s + (Number(x.totalOrden) || 0), 0);
+  }
+  const meta = Number(reto.meta || 0);
+  const pct = meta > 0 ? Math.min(100, Math.round((valor / meta) * 100)) : 0;
+  return { valor, pct, countedOrders: valid.length };
+}
+
+function getRetoEstado(reto) {
+  const today = new Date().toISOString().slice(0,10);
+  const ini = parseDateISO(reto.inicio || '') || '';
+  const fin = parseDateISO(reto.fin || '') || '';
+  if (ini && today < ini) return 'upcoming';
+  if (fin && today > fin) return 'ended';
+  return 'live';
+}
+
+async function computeRetoRanking(retoId) {
+  const insSnap = await db.collection('inscripciones').where('retoId','==', retoId).get();
+  const retoDoc = await db.collection('retos').doc(retoId).get();
+  const reto = { id: retoId, ...(retoDoc.data() || {}) };
+  const rows = [];
+  for (const d of insSnap.docs) {
+    const ins = d.data();
+    const u = await db.collection('users').doc(ins.userId).get();
+    const ud = u.data() || {};
+    const email = (ud.email || '').toLowerCase();
+    if (!email) continue;
+    const prog = await computeUserRetoProgress(reto, email, ins.enrolledAt?.toDate ? ins.enrolledAt.toDate().toISOString().slice(0,10) : '', ins.userId);
+    rows.push({ userId: ins.userId, nombre: ud.nombre || email, email, ...prog });
+  }
+  rows.sort((a,b)=>b.valor-a.valor);
+  return rows;
+}
+
+async function recalcAndStoreRetoRanking(retoId) {
+  const ranking = await computeRetoRanking(retoId);
+  await db.collection('reto_rankings').doc(retoId).set({
+    top10: ranking.slice(0,10),
+    totalParticipantes: ranking.length,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }, { merge: true });
+  return ranking;
+}
+
+async function getRetoRankingFast(retoId) {
+  const snap = await db.collection('reto_rankings').doc(retoId).get();
+  if (snap.exists && snap.data()?.top10) {
+    return { fromCache: true, top10: snap.data().top10, total: snap.data().totalParticipantes || snap.data().top10.length };
+  }
+  const ranking = await recalcAndStoreRetoRanking(retoId);
+  return { fromCache: false, top10: ranking.slice(0,10), total: ranking.length };
+}
+
+async function loadUserRetos(user, userData) {
+  const list = document.getElementById('userRetosList');
+  const topList = document.getElementById('userTop10List');
+  if (!list) return;
+
+  if (!userData.comunidadId) {
+    list.innerHTML = '<p class="text-sm text-slate-400">No tienes comunidad asignada.</p>';
+    return;
+  }
+
+  const [retosSnap, insSnap] = await Promise.all([
+    db.collection('retos').where('comunidadId','==', userData.comunidadId).get(),
+    db.collection('inscripciones').where('userId','==', user.uid).get()
+  ]);
+  
+  const insMap = new Map(insSnap.docs.map(d => [d.data().retoId, d.data()]));
+  const retos = retosSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+
+  let html = '';
+  let userPosicion = '-';
+  let userPuntos = 0;
+  
+  for (const r of retos) {
+    const ins = insMap.get(r.id);
+    const estado = getRetoEstado(r);
+    const estadoLabel = estado === 'live' ? 'En curso' : (estado === 'upcoming' ? 'Próximo' : 'Terminado');
+    const estadoCls = estado === 'live' ? 'bg-green-500' : (estado === 'upcoming' ? 'bg-yellow-500' : 'bg-slate-500');
+    
+    let progreso = 0;
+    let valorActual = 0;
+    let rankPos = '-';
+    
+    if (ins) {
+      const en = ins.enrolledAt?.toDate ? ins.enrolledAt.toDate().toISOString().slice(0,10) : '';
+      const prog = await computeUserRetoProgress(r, (userData.email || user.email || '').toLowerCase(), en, user.uid);
+      progreso = prog.pct || 0;
+      valorActual = prog.valor || 0;
+      const rankFast = await getRetoRankingFast(r.id);
+      const rankingTop = rankFast.top10 || [];
+      const inTop = rankingTop.findIndex(x => x.userId === user.uid);
+      if (inTop >= 0) rankPos = '#' + (inTop + 1);
+    }
+    
+    const isIn = !!ins;
+    const canJoin = !isIn && estado !== 'ended';
+    const barColor = progreso >= 100 ? 'bg-green-500' : (progreso >= 50 ? 'bg-yellow-500' : 'bg-primary');
+    const retoImg = r.imagen || 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800';
+    
+    html += `<div class="bg-white/5 rounded-xl overflow-hidden border border-white/10">
+      <div class="h-24 bg-cover bg-center" style="background-image:url('${retoImg.replace(/'/g,"%27")}')"></div>
+      <div class="p-4">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full ${estadoCls}"></span>
+            <span class="font-bold text-sm">${r.titulo || 'Reto'}</span>
+          </div>
+          <span class="text-[10px] text-slate-400">${estadoLabel}</span>
+        </div>
+        <div class="text-xs text-slate-400 mb-3">Meta: ${Number(r.meta||0).toLocaleString()} ${r.tipo || ''}</div>
+        <div class="mb-3">
+          <div class="flex justify-between text-xs mb-1">
+            <span>Progreso</span>
+            <span class="text-primary">${valorActual} / ${Number(r.meta||0).toLocaleString()}</span>
+          </div>
+          <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+            <div class="h-full ${barColor} transition-all" style="width: ${progreso}%"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-slate-400">Posición: ${rankPos}</span>
+          <button ${canJoin ? '' : 'disabled'} onclick="inscribirmeReto('${r.id}')" class="px-4 py-1.5 rounded-lg text-xs font-bold ${isIn ? 'bg-green-500/20 text-green-400' : (estado==='ended' ? 'bg-slate-500/20 text-slate-400' : 'bg-primary text-black')}">${isIn ? 'Inscrito' : (estado==='ended' ? 'Cerrado' : 'Inscribirme')}</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Also load Top 10 for the community
+  if (topList) {
+    const allUsersSnap = await db.collection('users').where('comunidadId', '==', userData.comunidadId).get();
+    const usersWithProgress = [];
+    for (const userDoc of allUsersSnap.docs) {
+      const u = userDoc.data();
+      const email = (u.email || '').toLowerCase();
+      if (!email) continue;
+      const ventas = await getVentasByEmail(email);
+      const fact = ventas.reduce((s, v) => s + (parseFloat(v.totalOrden) || 0), 0);
+      usersWithProgress.push({ userId: userDoc.id, nombre: u.nombre || email.split('@')[0], valor: fact });
+    }
+    usersWithProgress.sort((a, b) => b.valor - a.valor);
+    const userIndex = usersWithProgress.findIndex(x => x.userId === user.uid);
+    if (userIndex >= 0) {
+      userPosicion = '#' + (userIndex + 1);
+      userPuntos = usersWithProgress[userIndex].valor;
+    }
+    
+    const topHtml = usersWithProgress.slice(0, 10).map((u, i) => {
+      const isMe = u.userId === user.uid;
+      return `<div class="flex items-center justify-between p-2 rounded-lg ${isMe ? 'bg-primary/20 border border-primary' : 'bg-white/5'}">
+        <div class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full ${i < 3 ? 'bg-yellow-500/20 text-yellow-400' : 'bg-white/10'} flex items-center justify-center text-[10px] font-bold">${i+1}</span>
+          <span class="text-xs ${isMe ? 'text-primary font-bold' : ''}">${u.nombre}</span>
+        </div>
+        <span class="text-xs text-primary font-bold">$${u.valor.toLocaleString()}</span>
+      </div>`;
+    }).join('');
+    topList.innerHTML = topHtml || '<p class="text-xs text-slate-400">Sin datos</p>';
+    const topListMobile = document.getElementById('userTop10ListMobile');
+    if (topListMobile) topListMobile.innerHTML = topHtml || '<p class="text-xs text-slate-400">Sin datos</p>';
+  }
+  
+  document.getElementById('userRanking').textContent = userPosicion;
+  list.innerHTML = html || '<p class="text-sm text-slate-400 text-center py-8">No hay retos disponibles en tu comunidad.</p>';
+}
+
+window.verTop10Reto = async function(retoId, titulo) {
+  const modal = document.getElementById('top10Modal');
+  const body = document.getElementById('top10Body');
+  const title = document.getElementById('top10Title');
+  if (!modal || !body || !title) return;
+  title.textContent = `Top 10 · ${titulo || 'Reto'}`;
+  body.innerHTML = '<p class="text-sm text-slate-400">Cargando...</p>';
+  modal.classList.remove('hidden');
+  const rankFast = await getRetoRankingFast(retoId);
+  const ranking = rankFast.top10 || [];
+  body.innerHTML = ranking.map((r,i)=>`
+    <div class="flex items-center justify-between p-2 bg-black/30 border border-white/10 rounded">
+      <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-primary/20 text-primary text-xs flex items-center justify-center">${i+1}</span><span>${r.nombre}</span></div>
+      <span class="text-xs text-primary">${r.valor}</span>
+    </div>`).join('') || '<p class="text-sm text-slate-400">Sin participantes.</p>';
+}
+
+document.getElementById('closeTop10Btn')?.addEventListener('click', ()=> document.getElementById('top10Modal')?.classList.add('hidden'));
+
+document.getElementById('recalcRetosBtn')?.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if (!user) return;
+  const retosSnap = await db.collection('retos').where('creadoPor','==', user.uid).get();
+  for (const d of retosSnap.docs) {
+    await recalcAndStoreRetoRanking(d.id);
+  }
+  const liderDoc = await db.collection('lideres').doc(user.uid).get();
+  await loadLiderData(user, liderDoc.data() || {});
+  alert('✓ Ranking recalculado y snapshot actualizado');
+});
+
+window.inscribirmeReto = async function(retoId) {
+  const user = auth.currentUser;
+  if (!user) return;
+  const doc = await db.collection('users').doc(user.uid).get();
+  const userData = doc.data() || {};
+  if (!userData.comunidadId) return alert('No tienes comunidad asignada.');
+
+  const existing = await db.collection('inscripciones').where('userId','==',user.uid).where('retoId','==',retoId).limit(1).get();
+  if (!existing.empty) return alert('Ya estás inscrito en este reto.');
+
+  await db.collection('inscripciones').add({
+    userId: user.uid,
+    retoId,
+    comunidadId: userData.comunidadId,
+    enrolledAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+  await loadUserRetos(user, userData);
+  alert('✓ Inscripción realizada');
+}
+
+// Load Líder Data
+async function loadLiderData(user, userData) {
+    const nombre = userData.nombre || user.displayName || user.email;
+    const foto = userData.foto || user.photoURL || 'https://www.gravatar.com/avatar?d=mp';
+    document.getElementById('liderNameHeader').textContent = nombre;
+    document.getElementById('liderAvatar').src = foto;
+    const heroAvatar = document.getElementById('liderHeroAvatar');
+    if (heroAvatar) heroAvatar.src = foto;
+    const heroName = document.getElementById('liderHeroName');
+    if (heroName) heroName.textContent = nombre;
+    
+    // Get comunidades del líder
+    const comunidades = await db.collection('comunidades').where('liderId', '==', user.uid).get();
+    const comunidadesList = comunidades.docs.map(d => ({ id: d.id, ...d.data() }));
+    
+    let totalMembers = 0;
+    let totalVentas = 0;
+    let facturacion = 0;
+    const miembros = [];
+    
+    for (const com of comunidadesList) {
+        const users = await db.collection('users').where('comunidadId', '==', com.id).get();
+        totalMembers += users.size;
+        
+        for (const u of users.docs) {
+            const uData = u.data();
+            miembros.push({ ...uData, comunidadNombre: com.nombre });
+            const ventas = await getVentasByEmail(uData.email);
+            totalVentas += ventas.length;
+            facturacion += ventas.reduce((sum, v) => sum + (parseFloat(v.totalOrden) || 0), 0);
+        }
+    }
+    
+    document.getElementById('liderMembers').textContent = totalMembers;
+    document.getElementById('liderVentas').textContent = totalVentas;
+    document.getElementById('liderFacturacion').textContent = '$' + facturacion.toLocaleString();
+    
+    const list = document.getElementById('liderComunidades');
+    console.log('Comunidades encontradas:', comunidadesList.length, comunidadesList);
+    list.innerHTML = comunidadesList.map(c => `
+        <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+            <div class="flex items-center gap-3">
+                ${c.logo ? `<img src="${String(c.logo).replace(/'/g,"%27")}" class="w-10 h-10 rounded object-contain bg-white/10"/>` : '<div class="w-10 h-10 rounded bg-white/10 flex items-center justify-center text-xl">🏢</div>'}
+                <div>
+                    <p class="font-bold">${c.nombre}</p>
+                    <p class="text-slate-400 text-xs">Código: ${c.codigo}</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="generarEnlaceRegistro('${c.codigo}')" class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded hover:bg-green-500/30">📋 Copiar enlace</button>
+                <button onclick="openEditComunidad('${c.id}')" class="text-xs bg-primary/20 text-primary px-2 py-1 rounded hover:bg-primary/30">Editar</button>
+            </div>
+        </div>
+    `).join('') || '<p class="text-slate-400 text-sm">No tienes comunidades aún</p>';
+
+    const principalComunidad = comunidadesList[0]?.nombre || 'GENERAL';
+    const communityTitle = document.getElementById('communityTitle');
+    communityTitle.textContent = `COMMUNITY ${principalComunidad}`;
+    const heroCommunity = document.getElementById('liderHeroCommunity');
+    if (heroCommunity) heroCommunity.textContent = `Comunidad: ${principalComunidad}`;
+
+    // Perfil líder
+    document.getElementById('perfilUsername').value = userData.username || '';
+    document.getElementById('perfilSlogan').value = userData.slogan || '';
+    document.getElementById('perfilNombre').value = userData.nombre || '';
+    document.getElementById('perfilApellido').value = userData.apellido || '';
+    document.getElementById('perfilCedula').value = userData.cedula || '';
+    document.getElementById('perfilCiudad').value = userData.ciudad || '';
+    document.getElementById('perfilDireccion').value = userData.direccion || '';
+    const fotoGuardada = userData.foto || '';
+    const isDataUri = typeof fotoGuardada === 'string' && fotoGuardada.startsWith('data:image/');
+    document.getElementById('perfilFotoUrl').value = isDataUri ? '' : fotoGuardada;
+    const preview = document.getElementById('perfilFotoPreview');
+    if (preview) preview.src = fotoGuardada || foto;
+    window.perfilFotoData = fotoGuardada || '';
+    const fotoHint = document.getElementById('perfilFotoHint');
+    if (fotoHint) fotoHint.textContent = isDataUri ? 'Imagen cargada desde archivo local' : '';
+    const pset = new Set(userData.paises || []);
+    document.querySelectorAll('input[name="perfilPais"]').forEach(cb => cb.checked = pset.has(cb.value));
+
+    // Deduplicar miembros por email para evitar tarjetas repetidas
+    const uniqueByEmail = new Map();
+    for (const u of miembros) {
+      const key = (u.email || '').trim().toLowerCase() || Math.random().toString(36);
+      if (!uniqueByEmail.has(key)) uniqueByEmail.set(key, u);
+    }
+
+    window.liderMembersData = [];
+    for (const u of uniqueByEmail.values()) {
+      const ventasUser = await getVentasByEmail(u.email || '');
+      const totalSales = ventasUser.reduce((sum, v) => sum + (parseFloat(v.totalOrden) || 0), 0);
+      const unitsSold = ventasUser.reduce((sum, v) => sum + (parseInt(v.cantidad) || 0), 0);
+      window.liderMembersData.push({ ...u, totalSales, unitsSold });
+    }
+    renderLiderUsers();
+
+    const top10 = [...window.liderMembersData]
+      .sort((a,b)=> (b.totalSales||0) - (a.totalSales||0))
+      .slice(0,10);
+    const top10El = document.getElementById('top10Usuarios');
+    if (top10El) {
+      top10El.innerHTML = top10.map((u, i) => `
+        <div class="flex items-center justify-between p-3 bg-black/30 border border-white/10 rounded-lg">
+          <div class="flex items-center gap-3">
+            <div class="w-7 h-7 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold">${i+1}</div>
+            <div>
+              <p class="font-bold text-sm">${u.nombre || u.email || 'Usuario'}</p>
+              <p class="text-xs text-slate-400">${u.email || ''}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="text-sm font-bold text-primary">$${(u.totalSales||0).toLocaleString()}</p>
+            <p class="text-[11px] text-slate-400">${u.unitsSold||0} unidades</p>
+          </div>
+        </div>
+      `).join('') || '<p class="text-slate-400 text-sm">Aún no hay datos para ranking.</p>';
+    }
+
+    // Retos: cargar selector de comunidad y lista de retos
+    const retoComSel = document.getElementById('retoComunidad');
+    if (retoComSel) {
+      retoComSel.innerHTML = comunidadesList.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
+    }
+    const retosSnap = await db.collection('retos').where('creadoPor','==', user.uid).get();
+    const retosList = document.getElementById('retosList');
+    if (retosList) {
+      retosList.innerHTML = retosSnap.docs.map(d => {
+        const r=d.data();
+        const img = r.imagen || 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800';
+        const estado = getRetoEstado(r);
+        const estadoCls = estado === 'live' ? 'bg-green-600/30 text-green-300' : (estado === 'upcoming' ? 'bg-yellow-600/30 text-yellow-300' : 'bg-slate-600/30 text-slate-300');
+        return `<div class="rounded-xl overflow-hidden border border-white/10 bg-black/40">
+          <div class="h-40 bg-cover bg-center" style="background-image:url('${img.replace(/'/g,"%27")}')"></div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-2">
+              <p class="font-black">${r.titulo||'Reto'}</p>
+              <span class="text-[10px] px-2 py-1 rounded-full ${estadoCls} uppercase">${estado}</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-2">${r.descripcion||''}</p>
+            <p class="text-xs text-slate-300">${r.tipo||''} · Meta: <b>${r.meta||0}</b></p>
+            <p class="text-xs text-slate-500 mt-1">${r.inicio||''} → ${r.fin||''}</p>
+          </div>
+        </div>`;
+      }).join('') || '<p class="text-slate-400 text-sm">No hay retos creados.</p>';
+    }
+
+    setLeaderTab('dashboard');
+}
+
+function renderLiderUsers(query = '') {
+  const container = document.getElementById('liderUsuariosGrid');
+  if (!container) return;
+  const q = query.trim().toLowerCase();
+  const data = (window.liderMembersData || []).filter(u =>
+    (u.nombre || '').toLowerCase().includes(q) ||
+    (u.email || '').toLowerCase().includes(q)
+  );
+
+  container.innerHTML = data.map(u => `
+    <div class="p-4 rounded-xl bg-black/30 border border-white/10 hover:border-primary/50 transition">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="size-10 rounded-lg border-2 border-primary bg-primary/10 flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary text-sm">person</span>
+        </div>
+        <div>
+          <p class="font-bold leading-tight">${u.nombre || 'Sin nombre'}</p>
+          <p class="text-xs text-slate-400">${u.email || ''}</p>
+        </div>
+      </div>
+      <p class="text-[11px] text-primary uppercase tracking-wider mb-2">${u.comunidadNombre || '-'}</p>
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <div class="bg-white/5 rounded p-2">
+          <p class="text-slate-400">Total Sales</p>
+          <p class="font-bold">$${(u.totalSales || 0).toLocaleString()}</p>
+        </div>
+        <div class="bg-white/5 rounded p-2">
+          <p class="text-slate-400">Units Sold</p>
+          <p class="font-bold">${u.unitsSold || 0}</p>
+        </div>
+      </div>
+    </div>
+  `).join('') || '<p class="text-slate-400 text-sm">No hay usuarios vinculados</p>';
+}
+
+// Registrar miembro (Líder)
+document.getElementById('registrarMiembroBtn').onclick = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+    const comunidades = await db.collection('comunidades').where('liderId', '==', user.uid).get();
+    const sel = document.getElementById('miembroComunidad');
+    sel.innerHTML = comunidades.docs.map(d => `<option value="${d.id}">${d.data().nombre}</option>`).join('');
+    document.getElementById('miembroNombre').value='';
+    document.getElementById('miembroEmail').value='';
+    document.getElementById('registrarMiembroModal').classList.remove('hidden');
+    document.getElementById('registrarMiembroModal').classList.add('flex');
+};
+
+document.getElementById('closeMiembroModalBtn').onclick = () => {
+    document.getElementById('registrarMiembroModal').classList.add('hidden');
+};
+
+document.getElementById('saveMiembroBtn').onclick = async () => {
+    const nombre = document.getElementById('miembroNombre').value;
+    const email = document.getElementById('miembroEmail').value;
+    const telefono = document.getElementById('miembroTelefono').value;
+    const comunidadId = document.getElementById('miembroComunidad').value;
+    if (!nombre || !email || !telefono || !comunidadId) return alert('Completa los campos (incluyendo teléfono)');
+
+    try {
+      // Crear usuario usando app secundaria para no cerrar sesión del líder
+      const tempApp = firebase.initializeApp(firebase.app().options, 'temp-create-member-' + Date.now());
+      const tempAuth = tempApp.auth();
+      const tempPass = 'Tmp!' + Math.random().toString(36).slice(-8) + '9A';
+      const cred = await tempAuth.createUserWithEmailAndPassword(email, tempPass);
+      const uid = cred.user.uid;
+      await db.collection('users').doc(uid).set({
+        nombre, email, telefono, rol: 'usuario', comunidadId,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      await tempAuth.sendPasswordResetEmail(email);
+      await tempAuth.signOut();
+      await tempApp.delete();
+      document.getElementById('registrarMiembroModal').classList.add('hidden');
+      alert('✓ Miembro creado. Se envió correo para crear contraseña.');
+      const liderDoc = await db.collection('lideres').doc(auth.currentUser.uid).get();
+      loadLiderData(auth.currentUser, liderDoc.data());
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
+};
+
+// Create Comunidad Modal (Líder)
+document.getElementById('createComunidadBtn').onclick = () => {
+    document.getElementById('newComunidadNombre').value = '';
+    document.getElementById('newComunidadCodigo').value = '';
+    document.getElementById('newComunidadLogo').value = '';
+    if (document.getElementById('newComunidadLogoFile')) document.getElementById('newComunidadLogoFile').value = '';
+    document.getElementById('createComunidadModal').classList.remove('hidden');
+    document.getElementById('createComunidadModal').classList.add('flex');
+};
+
+document.getElementById('closeComunidadModalBtn').onclick = () => {
+    document.getElementById('createComunidadModal').classList.add('hidden');
+};
+
+document.getElementById('newComunidadLogoFile')?.addEventListener('change', (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      document.getElementById('newComunidadLogo').value = String(r.result || '');
+    };
+    r.readAsDataURL(f);
+});
+
+document.getElementById('saveComunidadBtn').onclick = async () => {
+    const nombre = document.getElementById('newComunidadNombre').value;
+    const codigo = document.getElementById('newComunidadCodigo').value.toUpperCase();
+    const logo = document.getElementById('newComunidadLogo').value.trim();
+    
+    if (!nombre || !codigo) {
+        alert('Completa todos los campos');
+        return;
+    }
+    
+    // Get current user (leader)
+    const user = auth.currentUser;
+    if (!user) {
+        alert('Sesión expirada');
+        return;
+    }
+    
+    try {
+        await db.collection('comunidades').add({
+            nombre: nombre,
+            codigo: codigo,
+            logo: logo || '',
+            liderId: user.uid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        document.getElementById('createComunidadModal').classList.add('hidden');
+        alert('✓ Comunidad creada!');
+        
+        // Refresh lider data
+        const liderDoc = await db.collection('lideres').doc(user.uid).get();
+        loadLiderData(user, liderDoc.data());
+    } catch(e) {
+        alert('Error: ' + e.message);
+    }
+};
+
+// Load Admin Data
+async function loadAdminData() {
+    const lideres = await db.collection('lideres').get();
+    const comunidades = await db.collection('comunidades').get();
+    const usuarios = await db.collection('users').get();
+    const ventas = await db.collection('ventas').get();
+    
+    document.getElementById('adminLideres').textContent = lideres.size;
+    document.getElementById('adminComunidades').textContent = comunidades.size;
+    document.getElementById('adminUsuarios').textContent = usuarios.size;
+    document.getElementById('adminVentas').textContent = ventas.size;
+    
+    const comunidadesList = comunidades.docs.map(d => ({ id: d.id, ...d.data() }));
+    window.allComunidades = comunidadesList;
+
+    const adminRetoComSel = document.getElementById('adminRetoComunidad');
+    if (adminRetoComSel) {
+      adminRetoComSel.innerHTML = `<option value="__GLOBAL__">🌐 Todas las comunidades (Global)</option>` + comunidadesList.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
+    }
+
+    const adminFilterCom = document.getElementById('adminRetoFilterComunidad');
+    if (adminFilterCom) {
+      const prev = adminFilterCom.value || '';
+      adminFilterCom.innerHTML = `<option value="">Todas las comunidades</option>` + comunidadesList.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
+      adminFilterCom.value = prev;
+    }
+
+    const adminRetosList = document.getElementById('adminRetosList');
+    if (adminRetosList) {
+      const retosSnap = await db.collection('retos').orderBy('createdAt','desc').limit(200).get();
+      const fCom = document.getElementById('adminRetoFilterComunidad')?.value || '';
+      const fEstado = document.getElementById('adminRetoFilterEstado')?.value || '';
+      const q = (document.getElementById('adminRetoSearch')?.value || '').toLowerCase().trim();
+      const filtered = retosSnap.docs.filter(d => {
+        const r = d.data() || {};
+        if (fCom && r.comunidadId !== fCom) return false;
+        if (fEstado && (r.estado || 'activo') !== fEstado) return false;
+        if (q) {
+          const txt = `${r.titulo || ''} ${r.descripcion || ''}`.toLowerCase();
+          if (!txt.includes(q)) return false;
+        }
+        return true;
+      });
+
+      const sortBy = document.getElementById('adminRetoSort')?.value || 'newest';
+      filtered.sort((a,b) => {
+        const ra = a.data() || {};
+        const rb = b.data() || {};
+        const ta = ra.createdAt?.toMillis ? ra.createdAt.toMillis() : 0;
+        const tb = rb.createdAt?.toMillis ? rb.createdAt.toMillis() : 0;
+        if (sortBy === 'oldest') return ta - tb;
+        if (sortBy === 'meta_desc') return Number(rb.meta||0) - Number(ra.meta||0);
+        if (sortBy === 'meta_asc') return Number(ra.meta||0) - Number(rb.meta||0);
+        if (sortBy === 'estado') return String(ra.estado||'activo').localeCompare(String(rb.estado||'activo'));
+        return tb - ta; // newest
+      });
+
+      window.adminRetosPage = window.adminRetosPage || 1;
+      const perPage = 10;
+      const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+      if (window.adminRetosPage > totalPages) window.adminRetosPage = totalPages;
+      const start = (window.adminRetosPage - 1) * perPage;
+      const pageItems = filtered.slice(start, start + perPage);
+
+      adminRetosList.innerHTML = pageItems.map(d => {
+        const r = d.data();
+        const com = comunidadesList.find(c => c.id === r.comunidadId);
+        return `<div class="p-3 bg-white/5 rounded-lg border border-white/10">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <p class="font-bold">${r.titulo || 'Reto'}</p>
+              <p class="text-xs text-slate-400">${com?.nombre || (r.global ? 'Global' : 'Sin comunidad')} · ${r.tipo || ''} · Meta ${r.meta || 0}</p>
+              <p class="text-xs text-slate-500">${r.inicio || ''} → ${r.fin || ''} · Estado: ${r.estado || 'activo'}</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="openEditAdminReto('${d.id}')" class="text-xs px-2 py-1 rounded bg-primary/20 text-primary">Editar</button>
+              <button onclick="deleteAdminReto('${d.id}')" class="text-xs px-2 py-1 rounded bg-red-500/20 text-red-400">Eliminar</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('') || '<p class="text-slate-400 text-sm">No hay retos.</p>';
+
+      const pageInfo = document.getElementById('adminRetosPageInfo');
+      if (pageInfo) pageInfo.textContent = `Página ${window.adminRetosPage} de ${totalPages}`;
+      const prevBtn = document.getElementById('adminRetosPrevBtn');
+      const nextBtn = document.getElementById('adminRetosNextBtn');
+      if (prevBtn) prevBtn.disabled = window.adminRetosPage <= 1;
+      if (nextBtn) nextBtn.disabled = window.adminRetosPage >= totalPages;
+    }
+    
+    const list = document.getElementById('lideresList');
+    list.innerHTML = lideres.docs.map(d => {
+        const data = d.data();
+        const coms = comunidadesList.filter(c => c.liderId === d.id);
+        return `<div class="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+            <div>
+                <p class="font-bold">${data.nombre || 'Sin nombre'}</p>
+                <p class="text-slate-400 text-xs">${data.email || ''}</p>
+                <p class="text-yellow-400 text-xs">${coms.length} comunidad(es)</p>
+            </div>
+            <button onclick="openEditLider('${d.id}')" class="bg-primary/20 text-primary px-3 py-1 rounded-lg text-sm hover:bg-primary/30">Editar</button>
+        </div>`;
+    }).join('') || '<p class="text-slate-400">No hay líderes</p>';
+
+    const sinCom = usuarios.docs.filter(d => !d.data().comunidadId && d.data().rol === 'usuario');
+    const sinComList = document.getElementById('usuariosSinComunidadList');
+    sinComList.innerHTML = sinCom.map(d => {
+      const u = d.data();
+      return `<div class="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+        <div>
+          <p class="font-bold">${u.nombre || 'Sin nombre'}</p>
+          <p class="text-slate-400 text-xs">${u.email || ''}</p>
+        </div>
+        <button onclick="openAssignComunidad('${d.id}','${(u.email||'').replace(/'/g,"\\'")}')" class="bg-primary/20 text-primary px-3 py-1 rounded-lg text-sm hover:bg-primary/30">Asignar</button>
+      </div>`;
+    }).join('') || '<p class="text-slate-400">No hay usuarios sin comunidad</p>';
+
+    const comunidadesAdminList = document.getElementById('comunidadesAdminList');
+    if (comunidadesAdminList) {
+      comunidadesAdminList.innerHTML = comunidadesList.map(c => `<div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+        <div class="flex items-center gap-3">
+          ${c.logo ? `<img src="${String(c.logo).replace(/'/g,'%27')}" class="w-8 h-8 object-contain rounded bg-white/5"/>` : `<div class="w-8 h-8 rounded bg-white/10"></div>`}
+          <div>
+            <p class="font-bold">${c.nombre || '-'}</p>
+            <p class="text-xs text-slate-400">${c.codigo || '-'}</p>
+          </div>
+        </div>
+        <button onclick="openEditComunidad('${c.id}')" class="bg-primary/20 text-primary px-3 py-1 rounded-lg text-sm hover:bg-primary/30">Editar</button>
+      </div>`).join('') || '<p class="text-slate-400">No hay comunidades</p>';
+    }
+}
+
+// Assign comunidad to unassigned user
+window.openAssignComunidad = async function(userId, email) {
+    document.getElementById('assignUserId').value = userId;
+    document.getElementById('assignUserEmail').textContent = email || '';
+    const comunidades = await db.collection('comunidades').get();
+    const sel = document.getElementById('assignComunidadSelect');
+    sel.innerHTML = comunidades.docs.map(d => `<option value="${d.id}">${d.data().nombre} (${d.data().codigo || ''})</option>`).join('');
+    document.getElementById('assignComunidadModal').classList.remove('hidden');
+    document.getElementById('assignComunidadModal').classList.add('flex');
+};
+
+document.getElementById('closeAssignComunidadBtn').onclick = () => {
+    document.getElementById('assignComunidadModal').classList.add('hidden');
+};
+
+document.getElementById('saveAssignComunidadBtn').onclick = async () => {
+    const userId = document.getElementById('assignUserId').value;
+    const comunidadId = document.getElementById('assignComunidadSelect').value;
+    if (!userId || !comunidadId) return;
+    await db.collection('users').doc(userId).update({ comunidadId });
+    document.getElementById('assignComunidadModal').classList.add('hidden');
+    loadAdminData();
+};
+
+// Edit comunidad (Admin)
+// Generate registration link for comunidad
+window.generarEnlaceRegistro = function(codigo) {
+    const baseUrl = window.location.origin + window.location.pathname;
+    const link = baseUrl + '?ref=' + codigo.toUpperCase();
+    navigator.clipboard.writeText(link).then(() => {
+        alert('✅ Enlace copiado:\n' + link);
+    }).catch(() => {
+        prompt('Copia este enlace:', link);
+    });
+};
+
+window.openEditComunidad = async function(comunidadId) {
+    const doc = await db.collection('comunidades').doc(comunidadId).get();
+    if (!doc.exists) return alert('Comunidad no encontrada');
+    const c = doc.data() || {};
+    document.getElementById('editComunidadId').value = comunidadId;
+    document.getElementById('editComunidadNombre').value = c.nombre || '';
+    document.getElementById('editComunidadCodigo').value = c.codigo || '';
+    document.getElementById('editComunidadLogo').value = c.logo || '';
+    if (document.getElementById('editComunidadLogoFile')) document.getElementById('editComunidadLogoFile').value = '';
+    const m = document.getElementById('editComunidadModal');
+    m.classList.remove('hidden');
+    m.classList.add('flex');
+};
+
+document.getElementById('closeComunidadEditBtn').onclick = () => {
+    const m = document.getElementById('editComunidadModal');
+    m.classList.add('hidden');
+    m.classList.remove('flex');
+};
+
+document.getElementById('editComunidadLogoFile')?.addEventListener('change', (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      document.getElementById('editComunidadLogo').value = String(r.result || '');
+    };
+    r.readAsDataURL(f);
+});
+
+document.getElementById('saveComunidadEditBtn').onclick = async () => {
+    const id = document.getElementById('editComunidadId').value;
+    const nombre = document.getElementById('editComunidadNombre').value.trim();
+    const codigo = document.getElementById('editComunidadCodigo').value.trim().toUpperCase();
+    const logo = document.getElementById('editComunidadLogo').value.trim();
+    if (!id || !nombre || !codigo) return alert('Completa nombre y código');
+    await db.collection('comunidades').doc(id).set({ nombre, codigo, logo, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    const m = document.getElementById('editComunidadModal');
+    m.classList.add('hidden');
+    m.classList.remove('flex');
+    alert('✓ Comunidad actualizada');
+    loadAdminData();
+};
+
+// Open edit modal
+window.openEditLider = async function(liderId) {
+    const doc = await db.collection('lideres').doc(liderId).get();
+    const data = doc.data();
+    
+    document.getElementById('editLiderId').value = liderId;
+    document.getElementById('editLiderNombre').value = data.nombre || '';
+    document.getElementById('editLiderEmail').value = data.email || '';
+    
+    // Show comunidades
+    const coms = window.allComunidades.filter(c => c.liderId === liderId);
+    const comsDiv = document.getElementById('editComunidadesList');
+    comsDiv.innerHTML = coms.map(c => `<div class="flex justify-between items-center bg-white/5 p-2 rounded">
+        <span>${c.nombre} (${c.codigo})</span>
+        <button onclick="removeComunidad('${c.id}', '${liderId}')" class="text-red-400">×</button>
+    </div>`).join('') || '<p class="text-slate-400 text-sm">Sin comunidades</p>';
+    
+    document.getElementById('editLiderModal').classList.remove('hidden');
+    document.getElementById('editLiderModal').classList.add('flex');
+};
+
+// Save lider
+document.getElementById('saveLiderBtn').onclick = async () => {
+    const liderId = document.getElementById('editLiderId').value;
+    const nombre = document.getElementById('editLiderNombre').value;
+    
+    await db.collection('lideres').doc(liderId).update({ nombre });
+    await db.collection('users').doc(liderId).update({ nombre });
+    
+    document.getElementById('editLiderModal').classList.add('hidden');
+    loadAdminData();
+};
+
+// Close modal
+document.getElementById('closeModalBtn').onclick = () => {
+    document.getElementById('editLiderModal').classList.add('hidden');
+};
+
+// Delete lider
+document.getElementById('deleteLiderBtn').onclick = async () => {
+    const liderId = document.getElementById('editLiderId').value;
+    if (confirm('¿Eliminar este líder?')) {
+        await db.collection('lideres').doc(liderId).delete();
+        document.getElementById('editLiderModal').classList.add('hidden');
+        loadAdminData();
+    }
+};
+
+// Reset password
+document.getElementById('resetPasswordBtn').onclick = async () => {
+    const email = document.getElementById('editLiderEmail').value;
+    if (!email) {
+        alert('Ingresa el email del líder');
+        return;
+    }
+    
+    try {
+        await firebase.auth().sendPasswordResetEmail(email);
+        alert('✓ Correo de recuperación enviado a ' + email);
+    } catch(e) {
+        alert('Error: ' + e.message);
+    }
+};
+
+// Create Líder
+document.getElementById('createLiderForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const nombre = document.getElementById('liderNombre').value;
+    const email = document.getElementById('liderEmail').value;
+    
+    // Fixed temporary password
+    const tempPassword = 'ADMA2024!';
+    
+    try {
+        // Create auth user
+        const cred = await firebase.auth().createUserWithEmailAndPassword(email, tempPassword);
+        const uid = cred.user.uid;
+        
+        // Create lider record
+        await db.collection('lideres').doc(uid).set({
+            nombre: nombre,
+            email: email,
+            rol: 'lider',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        // Update user record too
+        await db.collection('users').doc(uid).set({
+            nombre: nombre,
+            email: email,
+            rol: 'lider',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        alert('✓ Líder creado!\n\nEmail: ' + email + '\n\nContraseña temporal: ADMA2024!\n\nEl líder debe iniciar sesión con esta contraseña y luego cambiarla.');
+        
+        // Refresh the list
+        loadAdminData();
+        document.getElementById('liderNombre').value = '';
+        document.getElementById('liderEmail').value = '';
+        
+    } catch(error) {
+        alert('Error: ' + error.message);
+    }
+};
+
+// Import Excel with mapping + upsert by ID
+const importState = { headers: [], rows: [], map: {} };
+
+function detectMap(headers) {
+  const norm = h => (h || '').toString().trim().toLowerCase();
+  const find = (aliases) => headers.find(h => aliases.includes(norm(h))) || '';
+  return {
+    id_pedido: find(['id','pedido id','order id','id pedido','id_pedido','numero pedido','número pedido']),
+    fecha: find(['fecha','date','created at','fecha pedido']),
+    correo_dropshipper: find(['correo dropshipper','dropshipper email','email dropshipper','correo']),
+    cantidad: find(['cantidad','qty','units','unidades']),
+    total_proveedor: find(['total proveedor','total de la orden','total','amount','valor total']),
+    numero_guia: find(['número guía','numero guia','numero guía','guia','guía','nro guia','nro guía','número de guía','numero de guia']),
+    estado: find(['estado','status','estado pedido','order status']),
+    sku: find(['sku','sku padre','codigo sku']),
+    variacion_id: find(['variacion id','variación id','variant id','id variacion'])
+  };
+}
+
+function parseNumber(v) {
+  if (v === null || v === undefined || v === '') return 0;
+  const s = String(v).replace(/\./g,'').replace(',', '.').replace(/[^0-9.-]/g, '');
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function formatMoneyCompact(n) {
+  const num = Number(n || 0);
+  if (!Number.isFinite(num)) return '$0';
+  if (num >= 1_000_000_000) return '$' + (num / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'B';
+  if (num >= 1_000_000) return '$' + (num / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+  if (num >= 1_000) return '$' + (num / 1_000).toFixed(1).replace(/\.0$/, '') + 'K';
+  return '$' + Math.round(num).toString();
+}
+
+function parseDateISO(v) {
+  if (v === null || v === undefined || v === '') return '';
+
+  // Excel serial date
+  if (typeof v === 'number' && Number.isFinite(v)) {
+    const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+    const ms = v * 24 * 60 * 60 * 1000;
+    const d = new Date(excelEpoch.getTime() + ms);
+    if (!isNaN(d.getTime())) return d.toISOString().slice(0,10);
+  }
+
+  const s = String(v).trim();
+
+  // dd/mm/yyyy or dd-mm-yyyy
+  let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+  if (m) {
+    const dd = Number(m[1]);
+    const mm = Number(m[2]);
+    const yy = Number(m[3].length === 2 ? '20' + m[3] : m[3]);
+    const d = new Date(Date.UTC(yy, mm - 1, dd));
+    if (!isNaN(d.getTime())) return d.toISOString().slice(0,10);
+  }
+
+  // yyyy-mm-dd or parseable
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) return d.toISOString().slice(0,10);
+  return '';
+}
+
+function isEmail(v) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
+}
+
+function simpleHash(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = ((h << 5) - h) + str.charCodeAt(i);
+    h |= 0;
+  }
+  return Math.abs(h).toString(36);
+}
+
+function renderMappingUI() {
+  const wrap = document.getElementById('importMapping');
+  if (!wrap) return;
+  const fields = [
+    ['id_pedido','ID Pedido (obligatorio)'],
+    ['fecha','Fecha'],
+    ['correo_dropshipper','Correo dropshipper'],
+    ['cantidad','Cantidad'],
+    ['total_proveedor','Total proveedor'],
+    ['estado','Estado'],
+    ['sku','SKU'],
+    ['variacion_id','Variación ID']
+  ];
+  const opts = ['<option value="">-- seleccionar columna --</option>']
+    .concat(importState.headers.map(h => `<option value="${String(h).replace(/"/g,'&quot;')}">${h}</option>`))
+    .join('');
+  wrap.innerHTML = fields.map(([k,label]) => `
+    <div class="grid grid-cols-2 gap-2 items-center">
+      <label class="text-xs text-slate-300">${label}</label>
+      <select data-map="${k}" class="bg-black/30 border border-white/10 rounded px-2 py-1 text-xs">${opts}</select>
+    </div>
+  `).join('');
+  wrap.querySelectorAll('select[data-map]').forEach(sel => {
+    const key = sel.getAttribute('data-map');
+    sel.value = importState.map[key] || '';
+    sel.addEventListener('change', (e) => importState.map[key] = e.target.value);
+  });
+}
+
+document.getElementById('excelFile')?.addEventListener('change', async (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+  importState.fileName = file.name;
+  const data = await file.arrayBuffer();
+  const wb = XLSX.read(data, { type: 'array' });
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+  importState.rows = rows;
+  importState.headers = rows.length ? Object.keys(rows[0]) : [];
+  importState.map = detectMap(importState.headers);
+  renderMappingUI();
+});
+
+document.getElementById('saveMappingBtn')?.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if (!user) return alert('Sesión expirada');
+  if (!importState.fileName) return alert('Selecciona archivo primero');
+  await db.collection('import_mappings').doc(user.uid + '__' + importState.fileName).set({
+    fileName: importState.fileName,
+    map: importState.map,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }, { merge: true });
+  alert('✓ Mapeo guardado');
+});
+
+document.getElementById('loadMappingBtn')?.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if (!user) return alert('Sesión expirada');
+  if (!importState.fileName) return alert('Selecciona archivo primero');
+  const d = await db.collection('import_mappings').doc(user.uid + '__' + importState.fileName).get();
+  if (!d.exists) return alert('No hay mapeo guardado para este archivo');
+  importState.map = d.data().map || {};
+  renderMappingUI();
+  alert('✓ Mapeo cargado');
+});
+
+document.getElementById('importBtn').onclick = async () => {
+  const importBtn = document.getElementById('importBtn');
+  const progressEl = document.getElementById('importProgress');
+  try {
+    if (!importState.rows.length) return alert('Primero selecciona un archivo Excel.');
+    const idCol = importState.map.id_pedido;
+    if (!idCol) return alert('Mapea la columna ID Pedido (obligatorio).');
+
+    if (importBtn) { importBtn.disabled = true; importBtn.textContent = 'Importando...'; }
+    if (progressEl) progressEl.textContent = 'Iniciando importación...';
+
+    const getv = (row, key) => row[importState.map[key] || ''];
+    let inserted = 0, updated = 0, skipped = 0, errors = 0, ignoredNoEmail = 0, ignoredNoUser = 0;
+    const sourceFile = document.getElementById('excelFile')?.files?.[0]?.name || 'unknown.xlsx';
+    const errorRows = [];
+
+    // Cache de correos registrados
+    const usersSnap = await db.collection('users').get();
+    const registeredEmails = new Set(usersSnap.docs.map(d => String(d.data().email || '').toLowerCase().trim()).filter(Boolean));
+
+    const totalRows = importState.rows.length;
+    for (let i=0;i<totalRows;i++) {
+      const row = importState.rows[i];
+      const id = String(getv(row, 'id_pedido') || '').trim();
+      const correo = String(getv(row, 'correo_dropshipper') || '').toLowerCase().trim();
+      const cantidad = parseNumber(getv(row, 'cantidad'));
+      const total = parseNumber(getv(row, 'total_proveedor'));
+      const fecha = parseDateISO(getv(row, 'fecha'));
+
+      const rowErrors = [];
+      if (!id) rowErrors.push('ID vacío');
+      // Fecha inválida no bloquea importación; se conserva fecha original en texto
+      if (Number.isNaN(cantidad)) rowErrors.push('Cantidad inválida');
+      if (Number.isNaN(total)) rowErrors.push('Total inválido');
+      if (correo && !isEmail(correo)) rowErrors.push('Correo inválido');
+
+      if (rowErrors.length) {
+        errors++;
+        errorRows.push(`Fila ${i+2}: ${rowErrors.join(', ')}`);
+        continue;
+      }
+      if (!id) { skipped++; continue; }
+
+      // Regla de negocio: solo almacenar si correo existe y está registrado
+      if (!correo) { ignoredNoEmail++; continue; }
+      if (!registeredEmails.has(correo)) { ignoredNoUser++; continue; }
+
+      const sku = String(getv(row, 'sku') || '').trim();
+      const variacionId = String(getv(row, 'variacion_id') || '').trim();
+      const rowHash = simpleHash([id, String(getv(row,'fecha')||''), String(getv(row,'total_proveedor')||''), String(getv(row,'cantidad')||'')].join('|'));
+      const lineKey = sku ? `${id}__${sku}` : (variacionId ? `${id}__VAR_${variacionId}` : `${id}__H_${rowHash}`);
+
+      const guia = String(getv(row, 'numero_guia') || '').trim();
+      const payload = {
+        lineKey,
+        id_pedido: id,
+        sku,
+        variacionId,
+        fecha: fecha || String(getv(row, 'fecha') || ''),
+        correoDropshipper: correo,
+        cantidad: Number.isNaN(cantidad) ? 0 : cantidad,
+        totalOrden: Number.isNaN(total) ? 0 : total,
+        numeroGuia: guia,
+        estado: String(getv(row, 'estado') || ''),
+        source_file: sourceFile,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        raw: row
+      };
+
+      const ref = db.collection('ventas').doc(lineKey);
+      const doc = await ref.get();
+      if (doc.exists) {
+        await ref.set(payload, { merge: true });
+        updated++;
+      } else {
+        payload.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+        await ref.set(payload);
+        inserted++;
+      }
+
+      if (i % 100 === 0 && progressEl) {
+        progressEl.textContent = `Procesando ${i}/${totalRows}... Nuevos:${inserted} Actualizados:${updated}`;
+      }
+    }
+
+    const report = document.getElementById('importReport');
+    if (report) {
+      report.innerHTML = `
+        <div class="p-2 rounded bg-black/30 border border-white/10">
+          <p><b>Nuevos:</b> ${inserted} · <b>Actualizados:</b> ${updated} · <b>Saltados:</b> ${skipped} · <b>Errores:</b> ${errors}</p>
+          <p><b>Ignorados sin correo:</b> ${ignoredNoEmail} · <b>Ignorados sin usuario:</b> ${ignoredNoUser}</p>
+          ${errorRows.length ? `<details class="mt-1"><summary>Ver errores</summary><pre class="whitespace-pre-wrap text-[11px] mt-1">${errorRows.slice(0,60).join('\n')}</pre></details>` : ''}
+        </div>`;
+    }
+
+    if (progressEl) progressEl.textContent = '✅ Importación completada';
+    alert(`Importación completa\nNuevos: ${inserted}\nActualizados: ${updated}\nSaltados: ${skipped}\nErrores: ${errors}\nIgnorados sin correo: ${ignoredNoEmail}\nIgnorados sin usuario: ${ignoredNoUser}`);
+    loadAdminData();
+  } catch (e) {
+    console.error(e);
+    if (progressEl) progressEl.textContent = '❌ Error en importación';
+    alert('Error durante importación: ' + e.message);
+  } finally {
+    if (importBtn) { importBtn.disabled = false; importBtn.textContent = 'Importar'; }
+  }
+};
+
+// Logouts
+// Mobile sidebar toggle
+document.getElementById('menuToggleBtn')?.addEventListener('click', () => {
+    const sidebar = document.getElementById('userSidebar');
+    if (sidebar) sidebar.classList.remove('-translate-x-full');
+});
+
+document.getElementById('closeSidebarBtn')?.addEventListener('click', () => {
+    const sidebar = document.getElementById('userSidebar');
+    if (sidebar) sidebar.classList.add('-translate-x-full');
+});
+
+document.getElementById('logoutBtn').onclick = async () => { await auth.signOut(); location.reload(); };
+document.getElementById('liderLogoutBtn').onclick = async () => { await auth.signOut(); location.reload(); };
+document.getElementById('adminLogoutBtn').onclick = async () => { await auth.signOut(); location.reload(); };
+
+// Perfil líder foto
+const perfilFotoFile = document.getElementById('perfilFotoFile');
+const perfilFotoUrl = document.getElementById('perfilFotoUrl');
+if (perfilFotoFile) {
+  perfilFotoFile.addEventListener('change', (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const fileName = document.getElementById('perfilFotoFileName');
+    if (fileName) fileName.textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = () => {
+      window.perfilFotoData = reader.result;
+      const preview = document.getElementById('perfilFotoPreview');
+      if (preview) preview.src = reader.result;
+      const hint = document.getElementById('perfilFotoHint');
+      if (hint) hint.textContent = 'Imagen cargada desde archivo local';
+    };
+    reader.readAsDataURL(file);
+  });
+}
+if (perfilFotoUrl) {
+  perfilFotoUrl.addEventListener('input', (e) => {
+    const val = e.target.value.trim();
+    if (!val) return;
+    window.perfilFotoData = val;
+    const preview = document.getElementById('perfilFotoPreview');
+    if (preview) preview.src = val;
+  });
+}
+
+// Perfil líder save/cancel
+document.getElementById('savePerfilBtn')?.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if (!user) return;
+  const payload = {
+    username: document.getElementById('perfilUsername').value || '',
+    slogan: document.getElementById('perfilSlogan').value || '',
+    nombre: document.getElementById('perfilNombre').value || '',
+    apellido: document.getElementById('perfilApellido').value || '',
+    cedula: document.getElementById('perfilCedula').value || '',
+    ciudad: document.getElementById('perfilCiudad').value || '',
+    direccion: document.getElementById('perfilDireccion').value || '',
+    foto: window.perfilFotoData || document.getElementById('perfilFotoUrl').value || '',
+    paises: Array.from(document.querySelectorAll('input[name="perfilPais"]:checked')).map(x => x.value)
+  };
+  await db.collection('lideres').doc(user.uid).set(payload, { merge: true });
+  await db.collection('users').doc(user.uid).set(payload, { merge: true });
+  alert('✓ Perfil actualizado');
+  const liderDoc = await db.collection('lideres').doc(user.uid).get();
+  loadLiderData(user, liderDoc.data() || {});
+});
+
+document.getElementById('cancelPerfilBtn')?.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if (!user) return;
+  const liderDoc = await db.collection('lideres').doc(user.uid).get();
+  loadLiderData(user, liderDoc.data() || {});
+});
+
+// Imagen reto
+window.retoImagenData = '';
+const retoImagenUrl = document.getElementById('retoImagenUrl');
+const retoImagenFile = document.getElementById('retoImagenFile');
+if (retoImagenUrl) {
+  retoImagenUrl.addEventListener('input', (e) => {
+    const v = e.target.value.trim();
+    if (!v) return;
+    window.retoImagenData = v;
+    const p = document.getElementById('retoImagenPreview');
+    if (p) p.src = v;
+  });
+}
+if (retoImagenFile) {
+  retoImagenFile.addEventListener('change', (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      window.retoImagenData = r.result;
+      const p = document.getElementById('retoImagenPreview');
+      if (p) p.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+}
+
+// Crear reto
+document.getElementById('crearRetoBtn')?.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if (!user) return;
+  const payload = {
+    titulo: document.getElementById('retoTitulo').value || '',
+    descripcion: document.getElementById('retoDesc').value || '',
+    tipo: document.getElementById('retoTipo').value || 'facturacion',
+    meta: Number(document.getElementById('retoMeta').value || 0),
+    comunidadId: document.getElementById('retoComunidad').value || '',
+    inicio: document.getElementById('retoInicio').value || '',
+    fin: document.getElementById('retoFin').value || '',
+    imagen: window.retoImagenData || document.getElementById('retoImagenUrl').value || '',
+    creadoPor: user.uid,
+    estado: 'activo',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!payload.titulo || !payload.meta || !payload.comunidadId) return alert('Completa título, meta y comunidad');
+  await db.collection('retos').add(payload);
+  alert('✓ Reto creado');
+  const liderDoc = await db.collection('lideres').doc(user.uid).get();
+  loadLiderData(user, liderDoc.data() || {});
+});
+
+// Crear reto (Admin)
+document.getElementById('crearAdminRetoBtn')?.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if (!user) return;
+  const selectedCom = document.getElementById('adminRetoComunidad').value || '';
+  const basePayload = {
+    titulo: document.getElementById('adminRetoTitulo').value || '',
+    descripcion: document.getElementById('adminRetoDesc').value || '',
+    tipo: document.getElementById('adminRetoTipo').value || 'facturacion',
+    meta: Number(document.getElementById('adminRetoMeta').value || 0),
+    inicio: document.getElementById('adminRetoInicio').value || '',
+    fin: document.getElementById('adminRetoFin').value || '',
+    imagen: document.getElementById('adminRetoImagen').value || '',
+    creadoPor: user.uid,
+    creadoPorRol: 'admin',
+    estado: 'activo',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!basePayload.titulo || !basePayload.meta || !selectedCom) return alert('Completa título, meta y comunidad');
+
+  if (selectedCom === '__GLOBAL__') {
+    const comunidades = await db.collection('comunidades').get();
+    const gid = `GLOBAL_${Date.now()}`;
+    for (const c of comunidades.docs) {
+      await db.collection('retos').add({ ...basePayload, comunidadId: c.id, global: true, globalGroupId: gid });
+    }
+    alert('✓ Reto global creado para todas las comunidades');
+  } else {
+    await db.collection('retos').add({ ...basePayload, comunidadId: selectedCom, global: false });
+    alert('✓ Reto creado por Admin');
+  }
+  loadAdminData();
+});
+
+window.openEditAdminReto = async function(retoId) {
+  const ref = db.collection('retos').doc(retoId);
+  const snap = await ref.get();
+  if (!snap.exists) return alert('Reto no encontrado');
+  const r = snap.data() || {};
+
+  document.getElementById('editAdminRetoId').value = retoId;
+  document.getElementById('editAdminRetoTitulo').value = r.titulo || '';
+  document.getElementById('editAdminRetoTipo').value = r.tipo || 'facturacion';
+  document.getElementById('editAdminRetoMeta').value = Number(r.meta || 0);
+  document.getElementById('editAdminRetoEstado').value = r.estado || 'activo';
+  document.getElementById('editAdminRetoInicio').value = r.inicio || '';
+  document.getElementById('editAdminRetoFin').value = r.fin || '';
+  document.getElementById('editAdminRetoImagen').value = r.imagen || '';
+  document.getElementById('editAdminRetoDesc').value = r.descripcion || '';
+
+  const m = document.getElementById('editAdminRetoModal');
+  m.classList.remove('hidden');
+  m.classList.add('flex');
+};
+
+document.getElementById('closeEditAdminRetoBtn')?.addEventListener('click', () => {
+  const m = document.getElementById('editAdminRetoModal');
+  m.classList.add('hidden');
+  m.classList.remove('flex');
+});
+
+document.getElementById('saveEditAdminRetoBtn')?.addEventListener('click', async () => {
+  const retoId = document.getElementById('editAdminRetoId').value;
+  if (!retoId) return;
+  await db.collection('retos').doc(retoId).set({
+    titulo: document.getElementById('editAdminRetoTitulo').value || '',
+    tipo: document.getElementById('editAdminRetoTipo').value || 'facturacion',
+    meta: Number(document.getElementById('editAdminRetoMeta').value || 0),
+    estado: document.getElementById('editAdminRetoEstado').value || 'activo',
+    inicio: document.getElementById('editAdminRetoInicio').value || '',
+    fin: document.getElementById('editAdminRetoFin').value || '',
+    imagen: document.getElementById('editAdminRetoImagen').value || '',
+    descripcion: document.getElementById('editAdminRetoDesc').value || '',
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }, { merge: true });
+
+  const m = document.getElementById('editAdminRetoModal');
+  m.classList.add('hidden');
+  m.classList.remove('flex');
+  alert('✓ Reto actualizado');
+  loadAdminData();
+});
+
+window.deleteAdminReto = async function(retoId) {
+  if (!confirm('¿Eliminar este reto? Esta acción no se puede deshacer.')) return;
+  await db.collection('retos').doc(retoId).delete();
+  alert('✓ Reto eliminado');
+  loadAdminData();
+};
+
+document.getElementById('adminRetoFilterComunidad')?.addEventListener('change', () => { window.adminRetosPage = 1; loadAdminData(); });
+document.getElementById('adminRetoFilterEstado')?.addEventListener('change', () => { window.adminRetosPage = 1; loadAdminData(); });
+document.getElementById('adminRetoSearch')?.addEventListener('input', () => { window.adminRetosPage = 1; loadAdminData(); });
+document.getElementById('adminRetoSort')?.addEventListener('change', () => { window.adminRetosPage = 1; loadAdminData(); });
+document.getElementById('adminRetosPrevBtn')?.addEventListener('click', () => { window.adminRetosPage = Math.max(1, (window.adminRetosPage || 1) - 1); loadAdminData(); });
+document.getElementById('adminRetosNextBtn')?.addEventListener('click', () => { window.adminRetosPage = (window.adminRetosPage || 1) + 1; loadAdminData(); });
+
+// Auth State
+// Check for ref parameter on page load
+const urlParams = new URLSearchParams(window.location.search);
+const refParam = urlParams.get('ref');
+
+auth.onAuthStateChanged(async (user) => {
+    console.log('Auth state:', user ? user.uid : 'no user');
+    if (user) {
+        try {
+            await handleAuth(user);
+        } catch(e) {
+            console.error('HandleAuth error:', e);
+            alert('Error: ' + e.message);
+        }
+    } else if (refParam) {
+        // If there's a ref parameter, show registration with comunidad preselected
+        showView('register');
+        // Load comunidades for selection
+        const comunidades = await db.collection('comunidades').orderBy('nombre').get();
+        const opciones = comunidades.docs.map(d => `<option value="${d.id}" data-codigo="${d.data().codigo}">${d.data().nombre}</option>`).join('');
+        document.getElementById('regComunidad').innerHTML = '<option value="">-- Seleccionar --</option>' + opciones;
+        // Preselect comunidad by ref code
+        const select = document.getElementById('regComunidad');
+        for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].dataset.codigo === refParam.toUpperCase()) {
+                select.selectedIndex = i;
+                break;
+            }
+        }
+    } else {
+        showView('login');
+    }
+});
+</script>
+</body>
+</html>

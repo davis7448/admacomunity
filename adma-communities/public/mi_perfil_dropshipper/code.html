@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Member Profile - Futuristic Edition</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffff00",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#12120a",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .primary-glow {
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.2);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+<!-- Header -->
+<header class="sticky top-0 z-50 flex items-center justify-between p-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight uppercase">Identity</h1>
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</header>
+<main class="max-w-md mx-auto p-4 space-y-8">
+<!-- Profile Hero -->
+<section class="flex flex-col items-center text-center space-y-4 pt-4">
+<div class="relative">
+<div class="absolute inset-0 bg-primary rounded-full blur-xl opacity-20"></div>
+<div class="relative w-32 h-32 rounded-full border-4 border-primary p-1 bg-background-dark overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover rounded-full" data-alt="Close up portrait of a confident man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQDIA7WO8C9WKseuBVNlGsha-_iIL2EY5gI60-8pJssffXuV2L5rzQB5_Dyl5IAGF5GxSu3x-nKw3ZBZOA21IqOAcxgP6hsUiQGCoAZPIAluVEGr_hisn2zNfnF19UI6oSJ_eN2dmMYp8OGkvG-hk2xZke7mUZ4hqFNgs4R85rNiVDJakgmQLN5IsQir3BXvZWUzT9JcesLgZBlnY62RZ28n7-QleVq26NdjwcATb3F2qu8yztnaoLR6Q_JKaMADjh3nj4Eg8peg0"/>
+</div>
+<div class="absolute bottom-1 right-1 bg-primary text-background-dark px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                    Elite
+                </div>
+</div>
+<div>
+<h2 class="text-3xl font-bold tracking-tighter uppercase italic">Alex Rivet</h2>
+<p class="text-slate-500 dark:text-slate-400 font-medium tracking-wide">Nexus Protocol Member • Joined 2023</p>
+<div class="flex items-center justify-center gap-1 mt-1 text-primary">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-xs font-bold tracking-widest uppercase">Neo-Tokyo District</span>
+</div>
+</div>
+</section>
+<!-- Metrics Grid -->
+<section class="grid grid-cols-2 gap-4">
+<div class="glass-card rounded-xl p-5 flex flex-col gap-1 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-4xl">trending_up</span>
+</div>
+<span class="text-slate-400 text-xs font-bold uppercase tracking-widest">Global Sales</span>
+<span class="text-3xl font-bold tracking-tighter">1,284</span>
+<span class="text-emerald-400 text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">north_east</span> +12.4%
+                </span>
+</div>
+<div class="glass-card rounded-xl p-5 flex flex-col gap-1 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-4xl">bolt</span>
+</div>
+<span class="text-slate-400 text-xs font-bold uppercase tracking-widest">Revenue</span>
+<span class="text-3xl font-bold tracking-tighter text-primary">$42.5K</span>
+<span class="text-emerald-400 text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">north_east</span> +8.1%
+                </span>
+</div>
+</section>
+<!-- Community Rank -->
+<section>
+<div class="relative rounded-xl overflow-hidden bg-background-dark border border-primary/30 group">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent"></div>
+<img alt="Background Pattern" class="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-700 group-hover:scale-110" data-alt="Futuristic glowing neon lines and patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPEzV7Tz3HGEFcq0QE3HlnXfHUr7OJylnRplZGnu5X-ES6cbiaZ395tpF8ZmOBk7DZpJPI7dPk0vqNuXRkwFEmqKRa6bUL5oEyiIdvwkDWx0wA75vxoryyGxAdPr7_V7xs8PY-NuAo-AVIuoGLPL_ZC3dScnIUPMOsnKAmdsZCyhxZdTPzeQ2VjckHh2kQOIgpIcQwtITNg0HSS3pC8jOTWqZz4OKj29PU9kdjCW0fRB8TVhD_Ig0VyffqBEuM9luN0E_VcKYZlnI"/>
+<div class="relative p-6 flex items-center justify-between gap-4">
+<div class="space-y-1">
+<span class="text-primary text-[10px] font-bold tracking-[0.2em] uppercase">Current Tier</span>
+<h3 class="text-2xl font-black uppercase italic tracking-tighter text-slate-100">Elite Voyager</h3>
+<p class="text-slate-400 text-sm font-medium">Top 2% of the global community</p>
+</div>
+<button class="bg-primary text-background-dark px-4 py-2 rounded-lg font-bold text-sm hover:scale-105 transition-transform primary-glow">
+                        RANKINGS
+                    </button>
+</div>
+</div>
+</section>
+<!-- Next Milestone / Active Challenge -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h4 class="text-xs font-black uppercase tracking-[0.3em] text-slate-400 italic">Next Milestone</h4>
+<span class="text-[10px] font-bold text-primary px-2 py-0.5 border border-primary/20 rounded">URGENT</span>
+</div>
+<div class="glass-card rounded-xl p-5 border-l-4 border-l-primary space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<h5 class="font-bold text-lg leading-tight">Hyper-Growth Sprint</h5>
+<p class="text-slate-400 text-xs">Reach $50k Revenue to unlock "Master" status</p>
+</div>
+<span class="material-symbols-outlined text-primary">emoji_events</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] font-bold uppercase tracking-widest text-slate-500">
+<span>Progress</span>
+<span class="text-primary">85%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary primary-glow w-[85%] rounded-full"></div>
+</div>
+</div>
+<button class="w-full py-3 rounded-lg border border-primary/30 text-primary text-xs font-black uppercase tracking-widest hover:bg-primary hover:text-background-dark transition-all">
+                    Boost Challenge
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Market</span>
+</a>
+<div class="relative -top-8">
+<button class="bg-primary text-background-dark w-14 h-14 rounded-full flex items-center justify-center primary-glow border-4 border-background-dark">
+<span class="material-symbols-outlined font-black">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Stats</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">account_circle</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Profile</span>
+</a>
+</nav>
+</body></html>

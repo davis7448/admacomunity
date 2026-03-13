@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffff00",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23230f",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.4);
+        }
+        .glitch-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .glitch-effect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 45%, rgba(255, 255, 0, 0.1) 50%, transparent 55%);
+            background-size: 200% 200%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/20">
+<div class="flex items-center justify-between p-4">
+<span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+<h1 class="text-xl font-bold tracking-tighter uppercase italic">Elite Challenges</h1>
+<div class="relative">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full"></span>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex px-4 gap-6 overflow-x-auto no-scrollbar">
+<a class="pb-3 border-b-2 border-primary text-primary font-bold text-sm uppercase tracking-widest shrink-0" href="#">Live</a>
+<a class="pb-3 border-b-2 border-transparent text-slate-400 font-bold text-sm uppercase tracking-widest shrink-0" href="#">Upcoming</a>
+<a class="pb-3 border-b-2 border-transparent text-slate-400 font-bold text-sm uppercase tracking-widest shrink-0" href="#">Hall of Fame</a>
+<a class="pb-3 border-b-2 border-transparent text-slate-400 font-bold text-sm uppercase tracking-widest shrink-0" href="#">Ended</a>
+</div>
+</header>
+<main class="p-4 space-y-8 pb-24">
+<!-- Featured Challenges -->
+<section class="space-y-4">
+<h2 class="text-sm font-black uppercase tracking-[0.2em] text-primary/80">Grand Prizes</h2>
+<!-- Cash Prize Card -->
+<div class="group relative bg-slate-900 rounded-xl overflow-hidden border border-primary/30 neon-glow">
+<div class="aspect-[16/9] w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Stacks of cash bills in a sleek vault" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBaBDkr0LUQCNBIH2atAZ2w7BxrEWO-XCqvQmfhFCMLp8yQ0AHu150HSJSV0IobudFS5phnN8x58CUKnoGFudq-MikDAqZAATMq0Yvj35MB-3Vc8zXLjFBAwvetZthU_24iPfP64JfBvtjc9HjXbSsV4yZJAIKrWpF06jzf-wdEHB385sDkX9kYK1t_eDvdRHAjmBQpas2TbwJP2WKf6IBY1uzHSoQvK0YLiOOyIUTfALO9vSjhke3WP0dAhExWscPRvT7oivL8sjY');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-5 w-full">
+<div class="flex justify-between items-end">
+<div>
+<span class="bg-primary text-background-dark text-[10px] font-black px-2 py-0.5 rounded uppercase mb-2 inline-block">Flash Challenge</span>
+<h3 class="text-2xl font-bold text-white">$5,000 Cash Injection</h3>
+<p class="text-primary/70 text-sm font-medium">Rank in the top 1% this week</p>
+</div>
+<button class="bg-primary text-background-dark font-black px-4 py-2 rounded-lg text-sm hover:scale-105 transition-transform">JOIN NOW</button>
+</div>
+<div class="mt-4 bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-3/4 rounded-full shadow-[0_0_8px_rgba(255,255,0,0.8)]"></div>
+</div>
+<p class="text-[10px] text-slate-400 mt-2 uppercase tracking-tighter">75% capacity reached • 2 days left</p>
+</div>
+</div>
+<!-- Travel Card -->
+<div class="group relative bg-slate-900 rounded-xl overflow-hidden border border-white/10">
+<div class="aspect-[16/9] w-full bg-cover bg-center" data-alt="Futuristic Shenzhen skyline with neon lights" data-location="Shenzhen, China" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDDPKTvXYUKdabPzm6pT5K2VgThPxkPDTKZsocQoGyrENJLM8IXywM9Ty8OxEA2CQxsr4Jdk9A8pNX2Rx9l_VaoQvN9YdOL3bd19sunq1qog25phE-3oaAP3e1baOUk-X5vrFl3qM0skiQjvdV78eURk4yiNCwnrAaK27dU7yLZXmuYGyj23o_3aXqm_Wd4J2pViKDesfH_rZcFU7U7FXitv9etn0TSynoawLxl5XTmjE_QP5gH_ElA2WgUAD8xNvLotDwolvkLtcQ');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-5 w-full">
+<div class="flex justify-between items-end">
+<div>
+<h3 class="text-xl font-bold text-white">Luxury Trip: Shenzhen</h3>
+<p class="text-slate-300 text-sm">Full tech tour &amp; 5-star stay</p>
+</div>
+<button class="bg-white text-background-dark font-black px-4 py-2 rounded-lg text-sm">ENTER</button>
+</div>
+</div>
+</div>
+<!-- Scooter Card -->
+<div class="group relative bg-slate-900 rounded-xl overflow-hidden border border-white/10">
+<div class="aspect-[16/9] w-full bg-cover bg-center" data-alt="Modern high performance electric scooter in a dark studio" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXTINNbmuaoPa7X5Gr4wCHp7hEAG1SFHkMLu8BqKPdW-aBp-X7bIGFMxl56E91hRmFkNgZKDJT0ELE6htQgXGNORhNTHP-08KjPXx1s03-fP61kF4uJstI3_bZw1-5_-7PwtBUD73jCva4Dwh7975Pm-zVpUpOqHnn0yxHusB17ahdKeKC46DOVg9CCiOCDahGvh4OXITCUbWVR45m75tk3M4AVPhsDqis8Z1RKtxvV3bRcvIAMSDNBaTEO5WMMlAvyp51hUsOSlc');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-5 w-full">
+<div class="flex justify-between items-end">
+<div>
+<h3 class="text-xl font-bold text-white">Performance E-Scooter</h3>
+<p class="text-slate-300 text-sm">Custom matte black edition</p>
+</div>
+<button class="bg-white text-background-dark font-black px-4 py-2 rounded-lg text-sm">ENTER</button>
+</div>
+</div>
+</div>
+<!-- Mystery Card -->
+<div class="group relative bg-slate-900 rounded-xl overflow-hidden border-2 border-dashed border-primary/50 glitch-effect p-8 flex flex-col items-center justify-center text-center">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50"></div>
+<span class="material-symbols-outlined text-primary text-6xl mb-4 animate-pulse">help_center</span>
+<h3 class="text-2xl font-black italic text-primary tracking-tighter uppercase">Mystery Prize Box</h3>
+<p class="text-slate-400 text-sm mt-2 max-w-[200px]">Decrypt the challenge to unlock the vault</p>
+<div class="mt-6 flex gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-ping"></div>
+<div class="w-2 h-2 rounded-full bg-primary animate-ping" style="animation-delay: 0.2s"></div>
+<div class="w-2 h-2 rounded-full bg-primary animate-ping" style="animation-delay: 0.4s"></div>
+</div>
+</div>
+</section>
+<!-- Hall of Fame -->
+<section class="space-y-4">
+<div class="flex justify-between items-center">
+<h2 class="text-sm font-black uppercase tracking-[0.2em] text-primary/80">Hall of Fame</h2>
+<a class="text-xs font-bold text-slate-500 hover:text-primary transition-colors" href="#">VIEW ALL</a>
+</div>
+<div class="bg-white/5 rounded-xl border border-white/10 divide-y divide-white/5">
+<!-- Winner 1 -->
+<div class="flex items-center gap-4 p-4">
+<div class="relative">
+<img alt="" class="w-12 h-12 rounded-full object-cover border-2 border-primary" data-alt="Portrait of a young male winner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp7GUZ5Z1os37L3eumvqTUrO3_-SsID5fZu03KEVUFXLXv8kFgxv5aIAl5ks6PFU-s1fF_ugarAFJtHelIE3hjrx3s-Wbw3IXMJDwHT4jNKEEvu0eiUDW9bwsKeAdsw14aapev94K3yf6RBmU1uYdP1fbrmsVn123f_XL39kWV8Ds4bqWW--P8ex3XdhjnFRYpiTAvjGVAPUl6TRLVdO7afEXPXqzy6by4r_utS2bEAIpGhX7r1fEvswGjv8YdepL2mZ-hm5htHkY"/>
+<div class="absolute -bottom-1 -right-1 bg-primary text-background-dark rounded-full p-0.5">
+<span class="material-symbols-outlined text-[12px] block">workspace_premium</span>
+</div>
+</div>
+<div class="flex-1">
+<p class="font-bold text-white leading-none">@NeonRider</p>
+<p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Electric Scooter</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-slate-500 uppercase">Won</p>
+<p class="text-xs font-bold text-primary">2h ago</p>
+</div>
+</div>
+<!-- Winner 2 -->
+<div class="flex items-center gap-4 p-4">
+<div class="relative">
+<img alt="" class="w-12 h-12 rounded-full object-cover border-2 border-white/20" data-alt="Portrait of a smiling female winner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN29gbJt2KMB1gawy7zO4FFETH_376jLOXfQ6kmcjMVf-zP25XBWuZEjwDUk9zzuPQ7B_HfqCB2S6VLvPgW4tthMn6rauIiTUKaXBF0HS_OXd_Af0cp30KqO6U4aLCPKaGKCB_peW9-tRq_6r65C_YJgMdnJxBUX0IY5WoQdi6X5s2rAYAoDYJf8rBJx7HwU2iomcnN0ST3nFRv4JJWbG5Kvjf9e437XCR6S3Qe-RDApG19gQFBa6N2Ds4pTsuh1menpjmLTucfSY"/>
+</div>
+<div class="flex-1">
+<p class="font-bold text-white leading-none">@CipherQueen</p>
+<p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">$1,000 Credit</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-slate-500 uppercase">Won</p>
+<p class="text-xs font-bold text-slate-300">5h ago</p>
+</div>
+</div>
+<!-- Winner 3 -->
+<div class="flex items-center gap-4 p-4">
+<div class="relative">
+<img alt="" class="w-12 h-12 rounded-full object-cover border-2 border-white/20" data-alt="Portrait of a confident male winner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTgnkHKA7XU3ESZo38JUxTEL56-o9cWrkpSKgm-fOpq_Y3xARYf_qWOBUStA_sL42OmeWioH5GjUgplL6Rlf05Dxwa-3qDl0pmHKwzJ3VPZW4CCoQxRhx9MbosqOCUBYdl2xdsKkoEsdy6GfBtRKV1O4-7n658pvHyLaFW7NeqHQ4AuNelAdX2kB7JuRKg8lhrb54cOKSv8dv9MKd_bwVj2oUVm4rKjzDJo7F3mrB4MF69KnVWwgUnaosZqZC8xr8FrzjYOxSh7o4"/>
+</div>
+<div class="flex-1">
+<p class="font-bold text-white leading-none">@BitMaster</p>
+<p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Hardware Wallet</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-slate-500 uppercase">Won</p>
+<p class="text-xs font-bold text-slate-300">Yesterday</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-background-dark border-t border-primary/20 pb-6 pt-2 px-6 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">military_tech</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Challenges</span>
+</a>
+<div class="relative -top-8">
+<div class="bg-primary p-4 rounded-full shadow-[0_0_20px_rgba(255,255,0,0.4)] border-4 border-background-dark">
+<span class="material-symbols-outlined text-background-dark font-black">add</span>
+</div>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Rankings</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Profile</span>
+</a>
+</nav>
+</body></html>

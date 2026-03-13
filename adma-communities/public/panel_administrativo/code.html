@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Global Admin Panel | Dropship Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffff00",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23230f",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex flex-col lg:flex-row min-h-screen">
+<!-- Sidebar Navigation (Desktop) / Header (Mobile) -->
+<aside class="w-full lg:w-64 border-b lg:border-r border-primary/10 bg-background-light dark:bg-background-dark flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary size-8 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-background-dark font-bold">bolt</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Dropship<span class="text-primary">Pro</span></h1>
+</div>
+<nav class="flex-1 px-4 space-y-2 py-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded bg-primary text-background-dark font-bold" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Communities</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">trophy</span>
+<span>Challenges</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-primary/10">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden border border-primary/50">
+<img alt="Admin Avatar" data-alt="Professional male administrator avatar icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7EwR2Gkue0LNQAshS6H-J481DPNTmoIDqDI7vfGmUIqJZUTTqQlR-NxP8hnxS9tAV0Dn3s9Wg8VDZfgf4k2GEIC5UVIEy3GCRIfAWT4wS3wUXAgK0hoq3OdWI6HvRbgBiKpXosNuv9DB6uaaGN2T5ibpljvQMln4iMkE1YWcfw4AXqYE7SqNqdFhL2_f4IOCUUKqASaCJ0AefF-hSdgcbR_HBFWAb1R4EjceM02UHpINzhbM42y7U27ntVngBOwW9Ve-lh0Dtur0"/>
+</div>
+<div>
+<p class="text-sm font-bold">Alex Rivera</p>
+<p class="text-xs text-slate-500">Global Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto">
+<!-- Header Section -->
+<div class="p-6 lg:p-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-3xl font-bold leading-tight tracking-tight">Global Admin Panel</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Macro view of platform performance and active ecosystem metrics.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-4 py-2 rounded font-medium hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export Report
+                    </button>
+<button class="flex items-center gap-2 bg-primary text-background-dark px-4 py-2 rounded font-bold hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">add</span>
+                        New Challenge
+                    </button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-background-light dark:bg-primary/5 border border-primary/10 p-6 rounded-lg">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-500 dark:text-slate-400 font-medium">Total Revenue</p>
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+<p class="text-3xl font-bold leading-tight">$4.2M</p>
+<p class="text-emerald-500 text-sm font-medium mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +12% vs last month
+                    </p>
+</div>
+<div class="bg-background-light dark:bg-primary/5 border border-primary/10 p-6 rounded-lg">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-500 dark:text-slate-400 font-medium">Active Communities</p>
+<span class="material-symbols-outlined text-primary">hub</span>
+</div>
+<p class="text-3xl font-bold leading-tight">1,284</p>
+<p class="text-emerald-500 text-sm font-medium mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +5% vs last month
+                    </p>
+</div>
+<div class="bg-background-light dark:bg-primary/5 border border-primary/10 p-6 rounded-lg">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-500 dark:text-slate-400 font-medium">Monthly Active Users</p>
+<span class="material-symbols-outlined text-primary">person_check</span>
+</div>
+<p class="text-3xl font-bold leading-tight">892K</p>
+<p class="text-emerald-500 text-sm font-medium mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +18% vs last month
+                    </p>
+</div>
+<div class="bg-background-light dark:bg-primary/5 border border-primary/10 p-6 rounded-lg">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-500 dark:text-slate-400 font-medium">Platform Growth</p>
+<span class="material-symbols-outlined text-primary">insights</span>
+</div>
+<p class="text-3xl font-bold leading-tight">+24.8%</p>
+<p class="text-emerald-500 text-sm font-medium mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +4% target beat
+                    </p>
+</div>
+</div>
+<!-- Performance Chart Section -->
+<div class="p-6 lg:p-8">
+<div class="bg-background-light dark:bg-primary/5 border border-primary/10 p-6 rounded-lg">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="text-xl font-bold">Platform Performance Overview</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Global Dropshipping Volume - Last 30 Days</p>
+</div>
+<select class="bg-background-dark border border-primary/20 text-slate-100 rounded text-sm px-3 py-1 outline-none">
+<option>Last 30 Days</option>
+<option>Last 90 Days</option>
+<option>Last Year</option>
+</select>
+</div>
+<div class="h-64 w-full relative">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 200">
+<defs>
+<lineargradient id="chartGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#ffff00" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#ffff00" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,150 Q50,140 100,160 T200,120 T300,140 T400,80 T500,100 T600,60 T700,90 T800,40 T900,60 T1000,20 L1000,200 L0,200 Z" fill="url(#chartGradient)"></path>
+<path d="M0,150 Q50,140 100,160 T200,120 T300,140 T400,80 T500,100 T600,60 T700,90 T800,40 T900,60 T1000,20" fill="none" stroke="#ffff00" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex justify-between items-end pb-2 px-1 text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+<span>Week 1</span>
+<span>Week 2</span>
+<span>Week 3</span>
+<span>Week 4</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Two Column Section -->
+<div class="px-6 lg:px-8 pb-12 grid grid-cols-1 xl:grid-cols-2 gap-8">
+<!-- Top Performing Communities -->
+<div class="bg-background-light dark:bg-primary/5 border border-primary/10 rounded-lg overflow-hidden">
+<div class="p-6 border-b border-primary/10 flex items-center justify-between">
+<h3 class="text-lg font-bold">Top Performing Communities</h3>
+<a class="text-primary text-sm hover:underline" href="#">View All</a>
+</div>
+<div class="divide-y divide-primary/10">
+<!-- Community Item -->
+<div class="p-4 flex items-center gap-4 hover:bg-primary/5 transition-colors">
+<div class="size-12 rounded bg-background-dark border border-primary/20 flex items-center justify-center text-primary font-bold">EU</div>
+<div class="flex-1">
+<p class="font-bold">Ecom Elite Europe</p>
+<p class="text-xs text-slate-500">42.5K Active Members</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-emerald-500">$1.2M</p>
+<p class="text-[10px] uppercase tracking-tighter text-slate-500">Monthly GMV</p>
+</div>
+</div>
+<!-- Community Item -->
+<div class="p-4 flex items-center gap-4 hover:bg-primary/5 transition-colors">
+<div class="size-12 rounded bg-background-dark border border-primary/20 flex items-center justify-center text-primary font-bold">NA</div>
+<div class="flex-1">
+<p class="font-bold">North America Scalers</p>
+<p class="text-xs text-slate-500">38.1K Active Members</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-emerald-500">$980K</p>
+<p class="text-[10px] uppercase tracking-tighter text-slate-500">Monthly GMV</p>
+</div>
+</div>
+<!-- Community Item -->
+<div class="p-4 flex items-center gap-4 hover:bg-primary/5 transition-colors">
+<div class="size-12 rounded bg-background-dark border border-primary/20 flex items-center justify-center text-primary font-bold">AS</div>
+<div class="flex-1">
+<p class="font-bold">Asia Sourcing Hub</p>
+<p class="text-xs text-slate-500">29.4K Active Members</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-emerald-500">$750K</p>
+<p class="text-[10px] uppercase tracking-tighter text-slate-500">Monthly GMV</p>
+</div>
+</div>
+<!-- Community Item -->
+<div class="p-4 flex items-center gap-4 hover:bg-primary/5 transition-colors">
+<div class="size-12 rounded bg-background-dark border border-primary/20 flex items-center justify-center text-primary font-bold">LA</div>
+<div class="flex-1">
+<p class="font-bold">LatAm Dropship Masters</p>
+<p class="text-xs text-slate-500">18.2K Active Members</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-emerald-500">$420K</p>
+<p class="text-[10px] uppercase tracking-tighter text-slate-500">Monthly GMV</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Global Challenges -->
+<div class="bg-background-light dark:bg-primary/5 border border-primary/10 rounded-lg flex flex-col">
+<div class="p-6 border-b border-primary/10 flex items-center justify-between">
+<h3 class="text-lg font-bold">Active Global Challenges</h3>
+<button class="text-primary text-sm hover:underline">Manage All</button>
+</div>
+<div class="p-6 flex-1 space-y-4">
+<!-- Challenge Card -->
+<div class="bg-background-dark border border-primary/30 p-4 rounded relative overflow-hidden group">
+<div class="absolute top-0 right-0 bg-primary text-background-dark px-2 py-1 text-[10px] font-bold">ACTIVE</div>
+<h4 class="font-bold text-lg mb-1">The Q4 Blitz: 100 Sales Sprint</h4>
+<p class="text-sm text-slate-400 mb-4">First 50 users to reach 100 sales win a premium sourcing trip.</p>
+<div class="flex items-center justify-between text-xs mb-2">
+<span class="text-slate-300">Participants: 12,402</span>
+<span class="text-primary">82% Completed</span>
+</div>
+<div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[82%]"></div>
+</div>
+</div>
+<!-- Challenge Card -->
+<div class="bg-background-dark border border-slate-800 p-4 rounded relative overflow-hidden group">
+<div class="absolute top-0 right-0 bg-slate-700 text-slate-300 px-2 py-1 text-[10px] font-bold">UPCOMING</div>
+<h4 class="font-bold text-lg mb-1">New Year, New Vertical</h4>
+<p class="text-sm text-slate-400 mb-4">Launch a store in a brand new niche and hit $1k revenue in 14 days.</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary">schedule</span>
+<span class="text-xs text-slate-500">Starts in 12 days</span>
+</div>
+</div>
+<!-- Add Quick Challenge Action -->
+<div class="border-2 border-dashed border-primary/20 rounded p-6 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-3xl text-primary/40 mb-2">add_circle</span>
+<p class="font-bold text-slate-400">Create Global Event</p>
+<p class="text-xs text-slate-600 max-w-[200px] mt-1">Set a new benchmark for all platform users to compete in.</p>
+<button class="mt-4 bg-primary/10 text-primary border border-primary/30 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-primary/20">Configure Challenge</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Bar -->
+<div class="lg:hidden fixed bottom-0 left-0 right-0 bg-background-dark border-t border-primary/20 px-4 py-2 flex items-center justify-around z-50">
+<a class="flex flex-col items-center text-primary" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold">Dash</span>
+</a>
+<a class="flex flex-col items-center text-slate-500" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-bold">Hubs</span>
+</a>
+<a class="flex flex-col items-center text-slate-500" href="#">
+<span class="material-symbols-outlined">trophy</span>
+<span class="text-[10px] font-bold">Win</span>
+</a>
+<a class="flex flex-col items-center text-slate-500" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold">Sets</span>
+</a>
+</div>
+</body></html>

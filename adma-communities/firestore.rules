@@ -1,0 +1,122 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isLider() {
+      return isSignedIn() && exists(/databases/$(database)/documents/lideres/$(request.auth.uid));
+    }
+
+    function isSelf(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function comunidadEsDeLider(comunidadId) {
+      return isLider()
+        && exists(/databases/$(database)/documents/comunidades/$(comunidadId))
+        && get(/databases/$(database)/documents/comunidades/$(comunidadId)).data.liderId == request.auth.uid;
+    }
+
+    // Users
+    match /users/{userId} {
+      // NOTE: broad read kept for current dashboards (Top10/community lookups).
+      allow read: if isSignedIn();
+
+      allow create: if isAdmin() || isSelf(userId);
+      allow update: if isAdmin() || isSelf(userId);
+      allow delete: if isAdmin();
+    }
+
+    // Admins
+    match /admins/{adminId} {
+      allow read: if isAdmin() || isSelf(adminId);
+      allow write: if isAdmin();
+    }
+
+    // Lideres
+    match /lideres/{liderId} {
+      allow read: if isAdmin() || isSelf(liderId);
+      allow create: if isAdmin();
+      allow update: if isAdmin() || isSelf(liderId);
+      allow delete: if isAdmin();
+    }
+
+    // Comunidades
+    match /comunidades/{comunidadId} {
+      allow read: if true;  // Anyone can read comunidades (for registration)
+
+      allow create: if isAdmin()
+        || (isLider() && request.resource.data.liderId == request.auth.uid);
+
+      allow update: if isAdmin()
+        || (isLider() && resource.data.liderId == request.auth.uid);
+
+      allow delete: if isAdmin();
+    }
+
+    // Retos
+    match /retos/{retoId} {
+      allow read: if isSignedIn();
+
+      allow create: if isAdmin()
+        || (isLider() && comunidadEsDeLider(request.resource.data.comunidadId));
+
+      allow update: if isAdmin()
+        || (isLider() && comunidadEsDeLider(resource.data.comunidadId));
+
+      allow delete: if isAdmin()
+        || (isLider() && comunidadEsDeLider(resource.data.comunidadId));
+    }
+
+    // Inscripciones
+    match /inscripciones/{inscripcionId} {
+      allow read: if isAdmin()
+        || (isSignedIn() && resource.data.userId == request.auth.uid)
+        || (isLider() && comunidadEsDeLider(resource.data.comunidadId));
+
+      allow create: if isAdmin()
+        || (isSignedIn() && request.resource.data.userId == request.auth.uid);
+
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Ventas
+    match /ventas/{ventaId} {
+      // NOTE: kept broad read to avoid breaking analytics/rankings in current frontend.
+      allow read: if isSignedIn();
+
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Import mappings
+    match /import_mappings/{mappingId} {
+      allow read, write: if isAdmin()
+        || (isSignedIn() && mappingId.matches('^' + request.auth.uid + '__.*$'));
+    }
+
+    // Order allocations (reto exclusivity ledger)
+    match /order_allocations/{orderKey} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin() || isSignedIn();
+    }
+
+    // Cached rankings
+    match /reto_rankings/{retoId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin() || isLider();
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hall of Fame - Winners Ranking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffff00",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23230f",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card-active {
+            background: rgba(255, 255, 0, 0.05);
+            border: 1px solid rgba(255, 255, 0, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 justify-between border-b border-slate-200 dark:border-white/10">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-white/5 cursor-pointer">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_back</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight flex-1 text-center uppercase">Hall of Fame</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex items-center justify-center rounded-lg h-12 w-12 hover:bg-slate-200 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-primary">military_tech</span>
+</button>
+</div>
+</header>
+<main class="flex-1 flex flex-col pb-24">
+<div class="px-4 pt-6">
+<div class="flex bg-slate-100 dark:bg-white/5 rounded-xl p-1">
+<a class="flex flex-1 items-center justify-center bg-white dark:bg-primary text-slate-900 py-2 rounded-lg shadow-sm" href="#">
+<p class="text-sm font-bold">Global</p>
+</a>
+<a class="flex flex-1 items-center justify-center text-slate-500 dark:text-slate-400 py-2" href="#">
+<p class="text-sm font-bold">Friends</p>
+</a>
+<a class="flex flex-1 items-center justify-center text-slate-500 dark:text-slate-400 py-2" href="#">
+<p class="text-sm font-bold">Season</p>
+</a>
+</div>
+</div>
+<div class="flex p-6 @container">
+<div class="flex w-full flex-col gap-6 items-center">
+<div class="relative">
+<div class="absolute -inset-1 bg-primary rounded-full blur opacity-20"></div>
+<div class="relative bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 border-4 border-primary" data-alt="Close up portrait of a confident male champion" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAypnLyFCAHLNU7K7avthKT01FUJo86cccw4cDttybeT9ti5jjGKFUgvIiE5T9DCMwaC7dGsNBXCuUcFfTg-MOlFPITLg1yS54EfGWoL19G-C0Pl6GelUXA2ZK665ljuAjBjL5Ri2JPD-sieY9Gng5M-e9qlIgvb0jZCNSUJjZfXj3NHd_7SxmtU-u42qeZYmie24segslWXFA_HOaM4MrV6VgmQxCs5r1UHpr1GOSa1VDH91vzqLEQPZ6SdOkBadkHFr_-VTKUJhg");'></div>
+<div class="absolute bottom-0 right-0 bg-primary text-black text-xs font-black h-8 w-8 flex items-center justify-center rounded-full border-2 border-background-dark">
+                            #1
+                        </div>
+</div>
+<div class="flex flex-col items-center">
+<h1 class="text-3xl font-black uppercase tracking-tighter italic">Alex Rivera</h1>
+<p class="text-primary text-sm font-bold tracking-[0.2em] uppercase mt-1">Master Challenger</p>
+</div>
+</div>
+</div>
+<div class="flex gap-3 px-4 overflow-x-auto pb-4 no-scrollbar">
+<div class="flex min-w-[140px] flex-1 flex-col gap-1 rounded-xl p-4 glass-card">
+<p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Challenges Won</p>
+<p class="text-white text-2xl font-black tracking-tighter italic">42</p>
+<div class="h-1 w-8 bg-primary mt-1"></div>
+</div>
+<div class="flex min-w-[140px] flex-1 flex-col gap-1 rounded-xl p-4 glass-card">
+<p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Total Rewards</p>
+<p class="text-white text-2xl font-black tracking-tighter italic">$12.5k</p>
+<div class="h-1 w-8 bg-primary mt-1"></div>
+</div>
+<div class="flex min-w-[140px] flex-1 flex-col gap-1 rounded-xl p-4 glass-card">
+<p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Global Rank</p>
+<p class="text-white text-2xl font-black tracking-tighter italic">Top 1%</p>
+<div class="h-1 w-8 bg-primary mt-1"></div>
+</div>
+</div>
+<div class="mt-4 px-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-bold uppercase tracking-widest text-slate-500">Top Competitors</h3>
+<span class="material-symbols-outlined text-slate-500">sort</span>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-4 p-4 rounded-xl glass-card-active">
+<p class="text-primary font-black text-lg w-6 italic">2</p>
+<div class="h-12 w-12 rounded-full bg-cover bg-center border border-white/20" data-alt="Profile photo of a female professional winner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEKEL-0TdFtawftdPJS7czPwGaqKOPYCQIByzIUdaMLtRldoHaYqh_coduTk1pnc7tbUEAI5SpCyQQ3WiEkdCRUpK3SPwejUuYxe89dbGgGeGVKwJa0sPvSJZN9h3u3Yl4jy21-BGMnGdd7Z60tbx2N_QC7W5EeaTAAWXkxrQjoEJ7QkfFCufTaizM1u_lICKl9zLCuQuKB3TjGtZRx-_IbONVdnwxEeJA0yMf0JSukY0avWDkiPdjbROfN2UxkFVGJd9kPwq7nW8");'></div>
+<div class="flex-1">
+<p class="font-bold text-slate-100 italic">Sarah J. Miller</p>
+<p class="text-xs text-slate-400 font-medium">38 Wins • $10.2k</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="material-symbols-outlined text-primary text-xl">trending_up</span>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-xl glass-card">
+<p class="text-slate-500 font-black text-lg w-6 italic">3</p>
+<div class="h-12 w-12 rounded-full bg-cover bg-center border border-white/20" data-alt="Profile photo of an elite tech performer" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCSfJb7PREWbvrWcMMQgAUzxq1MgY480KjjaJ2ycrEgZgeiyiWkhmcJBOexgr2Pv4cpN3CWbNRowBNZWu7FSiFS1jap5vTfH9ncTPDkqAFWQKA7nrqnqPjRW6RIQAyzYWV3XMLWVA02nVOuw10fL9amZ7s24XLG2YjGI97VCc5JtRGV2m7HBPaX_Mcfk8TTanNXZjfy1iEqjJUfu1_a8GOm0M6R5nAOuBFKP56rEsD2YMMxJEvifW-CM-FXs8RU__wSBJNmivLf7xI");'></div>
+<div class="flex-1">
+<p class="font-bold text-slate-100 italic">Marcus Chen</p>
+<p class="text-xs text-slate-400 font-medium">35 Wins • $8.9k</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="material-symbols-outlined text-slate-500 text-xl">remove</span>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-xl glass-card">
+<p class="text-slate-500 font-black text-lg w-6 italic">4</p>
+<div class="h-12 w-12 rounded-full bg-cover bg-center border border-white/20" data-alt="Profile photo of a top ranking competitor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAHDnVFcG0-SEV9ugNO4XcAatkB_QcsEdff2nrE4Vz6hmbMTwL1qVRpK2UuTzO-HKyCIrjE59pWm7TIfEeBO3ZdYwE6E82QJ2xLx3Om11pJ6ylYM0L9gaOtPVgGDEBH0Lx0lE9V0PG9kiQ6UF0g9tk5DUCiPrjTlY2kVvlAHFsao6PseE3R-ufiB900cCHUdVUdbHDS3RY55n0LF8N095bwj-10F0fKfzQBG87qwKcs_wUgfOGEAoteisQFMxPNVPRjxwm_io3y0GU");'></div>
+<div class="flex-1">
+<p class="font-bold text-slate-100 italic">Elena Voss</p>
+<p class="text-xs text-slate-400 font-medium">31 Wins • $7.4k</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="material-symbols-outlined text-red-500 text-xl">trending_down</span>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-xl glass-card">
+<p class="text-slate-500 font-black text-lg w-6 italic">5</p>
+<div class="h-12 w-12 rounded-full bg-cover bg-center border border-white/20" data-alt="Profile photo of a high achieving user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADCuRckFD_F9oG7UbkoUYnaMtyY5kwCyMCE5VCmp-04NWll98iBDzo_j-GgFUi6ATUto4CLYIzOCraD6pqqmiIPzCK0oYJnQcF0mM5w7f3wS9KMGkezY-gYuXm-juogCOnc0pw5FHyqbLiCvI91X07wTVhK4Aar1jgwteytGhrRzIR6GTR-oeweBRwurW9pr4vwrBbhOZAbFU2bv9JrzEiHyHdB18pzu3wk_IL4ojCFy4bax5ue6Z5jNJLAVBMok5Ed-3mLJzZTac");'></div>
+<div class="flex-1">
+<p class="font-bold text-slate-100 italic">David Kim</p>
+<p class="text-xs text-slate-400 font-medium">28 Wins • $6.2k</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="material-symbols-outlined text-primary text-xl">trending_up</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 dark:border-white/10 bg-white/90 dark:bg-background-dark/90 backdrop-blur-lg px-4 pb-6 pt-3">
+<div class="flex items-center justify-around max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-bold uppercase tracking-wider">Home</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">swords</span>
+<p class="text-[10px] font-bold uppercase tracking-wider">Challenges</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">trophy</span>
+<p class="text-[10px] font-bold uppercase tracking-wider">Rankings</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px] font-bold uppercase tracking-wider">Profile</p>
+</a>
+</div>
+</nav>
+<div class="fixed top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-[140px] -z-10 pointer-events-none"></div>
+</div>
+</body></html>

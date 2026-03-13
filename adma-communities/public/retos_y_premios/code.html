@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffff00",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23230f",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<title>Dropship Pro - Challenges &amp; Rewards</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 border-b border-primary/10 justify-between sticky top-0 z-50 backdrop-blur-md">
+<div class="flex items-center gap-3">
+<div class="text-primary flex size-10 items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-2xl">trophy</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Challenges &amp; Rewards</h2>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<main class="flex-1 pb-24">
+<!-- Stats Dashboard -->
+<div class="flex flex-wrap gap-4 p-4">
+<div class="flex min-w-[150px] flex-1 flex-col gap-2 rounded-xl p-5 bg-slate-900/50 border border-primary/20 backdrop-blur-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-400 text-sm font-medium leading-normal">Total Points</p>
+<span class="material-symbols-outlined text-primary text-sm">stars</span>
+</div>
+<p class="text-primary tracking-light text-3xl font-bold leading-tight">12,450</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[#0bda24] text-xs">trending_up</span>
+<p class="text-[#0bda24] text-xs font-medium leading-normal">+15% vs last week</p>
+</div>
+</div>
+<div class="flex min-w-[150px] flex-1 flex-col gap-2 rounded-xl p-5 bg-slate-900/50 border border-primary/20 backdrop-blur-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-400 text-sm font-medium leading-normal">Global Rank</p>
+<span class="material-symbols-outlined text-primary text-sm">leaderboard</span>
+</div>
+<p class="text-slate-100 tracking-light text-3xl font-bold leading-tight">#42</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[#0bda24] text-xs">arrow_upward</span>
+<p class="text-[#0bda24] text-xs font-medium leading-normal">Up 3 spots</p>
+</div>
+</div>
+</div>
+<!-- Action Section -->
+<div class="px-4 py-2">
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined">add_circle</span>
+                    Create New Challenge
+                </button>
+</div>
+<!-- Active Challenges List -->
+<div class="px-4 pt-6">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-slate-100 text-xl font-bold leading-tight tracking-tight">Active Community Challenges</h2>
+<span class="text-primary text-xs font-bold uppercase tracking-widest bg-primary/10 px-2 py-1 rounded">Live Now</span>
+</div>
+<div class="space-y-4">
+<!-- Challenge Card 1 -->
+<div class="flex flex-col gap-4 p-5 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-100 font-bold text-base">Sell 50 items this week</h3>
+<p class="text-slate-400 text-xs">Expires in 2 days, 4 hours</p>
+</div>
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">shopping_cart</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs text-slate-300">
+<span>32 / 50 items</span>
+<span>64%</span>
+</div>
+<div class="h-2 rounded-full bg-slate-800 overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 64%;"></div>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-2 border-t border-slate-800">
+<span class="material-symbols-outlined text-primary text-sm">military_tech</span>
+<p class="text-primary/90 text-xs font-medium">Prize: Golden Badge + $50 Credits</p>
+</div>
+</div>
+<!-- Challenge Card 2 -->
+<div class="flex flex-col gap-4 p-5 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-100 font-bold text-base">Perfect 5-Star Rating Streak</h3>
+<p class="text-slate-400 text-xs">Maintain for 10 consecutive orders</p>
+</div>
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">star</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs text-slate-300">
+<span>8 / 10 orders</span>
+<span>80%</span>
+</div>
+<div class="h-2 rounded-full bg-slate-800 overflow-hidden">
+<div class="h-full rounded-full bg-primary shadow-[0_0_10px_rgba(255,255,0,0.5)]" style="width: 80%;"></div>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-2 border-t border-slate-800">
+<span class="material-symbols-outlined text-primary text-sm">workspace_premium</span>
+<p class="text-primary/90 text-xs font-medium">Prize: "Elite Seller" Status (30d)</p>
+</div>
+</div>
+<!-- Challenge Card 3 -->
+<div class="flex flex-col gap-4 p-5 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-100 font-bold text-base">Refer 5 New Suppliers</h3>
+<p class="text-slate-400 text-xs">Help the community grow</p>
+</div>
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">groups</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs text-slate-300">
+<span>1 / 5 referrals</span>
+<span>20%</span>
+</div>
+<div class="h-2 rounded-full bg-slate-800 overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 20%;"></div>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-2 border-t border-slate-800">
+<span class="material-symbols-outlined text-primary text-sm">payments</span>
+<p class="text-primary/90 text-xs font-medium">Prize: $100 Cash Reward</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Rewards -->
+<div class="px-4 py-8">
+<h3 class="text-slate-400 text-sm font-bold uppercase tracking-[0.2em] mb-4">Recent Unlocks</h3>
+<div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+<div class="flex flex-col items-center gap-2 min-w-[100px]">
+<div class="size-16 rounded-full border-2 border-primary bg-primary/5 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">emoji_events</span>
+</div>
+<span class="text-[10px] text-slate-300 font-medium text-center uppercase tracking-wider leading-tight">Fastest<br/>Shipper</span>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[100px]">
+<div class="size-16 rounded-full border-2 border-slate-700 bg-slate-800/30 flex items-center justify-center grayscale opacity-50">
+<span class="material-symbols-outlined text-slate-500 text-3xl">diamond</span>
+</div>
+<span class="text-[10px] text-slate-500 font-medium text-center uppercase tracking-wider leading-tight">Master<br/>Marketer</span>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[100px]">
+<div class="size-16 rounded-full border-2 border-primary bg-primary/5 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">verified</span>
+</div>
+<span class="text-[10px] text-slate-300 font-medium text-center uppercase tracking-wider leading-tight">Rising<br/>Star</span>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[100px]">
+<div class="size-16 rounded-full border-2 border-slate-700 bg-slate-800/30 flex items-center justify-center grayscale opacity-50">
+<span class="material-symbols-outlined text-slate-500 text-3xl">rocket_launch</span>
+</div>
+<span class="text-[10px] text-slate-500 font-medium text-center uppercase tracking-wider leading-tight">Growth<br/>Ninja</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 border-t border-primary/10 bg-background-dark/80 backdrop-blur-lg px-4 pb-4 pt-2 flex justify-between items-end z-50">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium tracking-wide">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<p class="text-[10px] font-medium tracking-wide">Market</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary relative" href="#">
+<div class="absolute -top-1 size-1 bg-primary rounded-full blur-[2px]"></div>
+<span class="material-symbols-outlined fill-current text-[28px]">trophy</span>
+<p class="text-[10px] font-bold tracking-wide">Challenges</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px] font-medium tracking-wide">Profile</p>
+</a>
+</nav>
+</div>
+</body></html>
