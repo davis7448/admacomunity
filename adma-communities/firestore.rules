@@ -24,10 +24,19 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/comunidades/$(comunidadId)).data.liderId == request.auth.uid;
     }
 
-    // Users
+    // Helper: check if user belongs to comunidad (for líder to see their members)
+    function usuarioEsDeMiComunidad(userId) {
+      return isLider() && exists(/databases/$(database)/documents/users/$(userId))
+        && get(/databases/$(database)/documents/users/$(userId)).data.comunidadId != null
+        && comunidadEsDeLider(get(/databases/$(database)/documents/users/$(userId)).data.comunidadId);
+    }
+
+    // Users - SEGURIDAD MEJORADA
     match /users/{userId} {
-      // NOTE: broad read kept for current dashboards (Top10/community lookups).
-      allow read: if isSignedIn();
+      // Lectura: propio, admin, líder de su comunidad
+      allow read: if isAdmin() 
+        || isSelf(userId) 
+        || (isLider() && usuarioEsDeMiComunidad(userId));
 
       allow create: if isAdmin() || isSelf(userId);
       allow update: if isAdmin() || isSelf(userId);
@@ -50,7 +59,7 @@ service cloud.firestore {
 
     // Comunidades
     match /comunidades/{comunidadId} {
-      allow read: if true;  // Anyone can read comunidades (for registration)
+      allow read: if true;  // Público para registro
 
       allow create: if isAdmin()
         || (isLider() && request.resource.data.liderId == request.auth.uid);
@@ -84,14 +93,13 @@ service cloud.firestore {
       allow create: if isAdmin()
         || (isSignedIn() && request.resource.data.userId == request.auth.uid);
 
-      allow update: if isAdmin();
-      allow delete: if isAdmin();
+      allow update, delete: if isAdmin();
     }
 
-    // Ventas
+    // Ventas - SEGURIDAD MEJORADA
     match /ventas/{ventaId} {
-      // NOTE: kept broad read to avoid breaking analytics/rankings in current frontend.
-      allow read: if isSignedIn();
+      // Solo admin y líderes pueden leer ventas
+      allow read: if isAdmin() || isLider();
 
       allow create, update, delete: if isAdmin();
     }
@@ -102,10 +110,11 @@ service cloud.firestore {
         || (isSignedIn() && mappingId.matches('^' + request.auth.uid + '__.*$'));
     }
 
-    // Order allocations (reto exclusivity ledger)
+    // Order allocations - SEGURIDAD MEJORADA
     match /order_allocations/{orderKey} {
       allow read: if isSignedIn();
-      allow write: if isAdmin() || isSignedIn();
+      // Solo admin puede escribir allocations (para importar datos)
+      allow write: if isAdmin();
     }
 
     // Cached rankings
