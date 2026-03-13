@@ -28,7 +28,8 @@ const cache = {
     comunidades: 0,
     usuarios: 0,
     retos: 0,
-    lideres: 0
+    lideres: 0,
+    ventas: 0
   },
   
   isValid(collection) {
@@ -48,6 +49,11 @@ const cache = {
   },
   
   getAll(collection) {
+    // Validate TTL before returning
+    if (!this.isValid(collection)) {
+      this[collection].clear();
+      return [];
+    }
     return Array.from(this[collection].values());
   },
   
