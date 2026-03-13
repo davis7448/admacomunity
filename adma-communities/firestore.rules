@@ -24,19 +24,20 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/comunidades/$(comunidadId)).data.liderId == request.auth.uid;
     }
 
-    // Helper: check if user belongs to comunidad (for líder to see their members)
-    function usuarioEsDeMiComunidad(userId) {
-      return isLider() && exists(/databases/$(database)/documents/users/$(userId))
-        && get(/databases/$(database)/documents/users/$(userId)).data.comunidadId != null
-        && comunidadEsDeLider(get(/databases/$(database)/documents/users/$(userId)).data.comunidadId);
+    // Helper: check if target user doc belongs to a comunidad owned by current líder
+    // Uses resource.data so it works for both single-doc reads and filtered queries.
+    function recursoUsuarioEsDeMiComunidad() {
+      return isLider()
+        && resource.data.comunidadId != null
+        && comunidadEsDeLider(resource.data.comunidadId);
     }
 
     // Users - SEGURIDAD MEJORADA
     match /users/{userId} {
       // Lectura: propio, admin, líder de su comunidad
-      allow read: if isAdmin() 
-        || isSelf(userId) 
-        || (isLider() && usuarioEsDeMiComunidad(userId));
+      allow read: if isAdmin()
+        || isSelf(userId)
+        || recursoUsuarioEsDeMiComunidad();
 
       allow create: if isAdmin() || isSelf(userId);
       allow update: if isAdmin() || isSelf(userId);

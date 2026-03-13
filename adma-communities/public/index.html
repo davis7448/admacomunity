@@ -740,26 +740,41 @@ function showView(viewName) {
 }
 
 // Navigate
-document.getElementById('showRegister').onclick = async () => {
-        showView('register');
-        // Load comunidades for selection
-        const comunidades = await db.collection('comunidades').orderBy('nombre').get();
-        const opciones = comunidades.docs.map(d => `<option value="${d.id}" data-codigo="${d.data().codigo}">${d.data().nombre}</option>`).join('');
-        document.getElementById('regComunidad').innerHTML = '<option value="">-- Seleccionar --</option>' + opciones;
-        
-        // Check for ?ref= parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const refCode = urlParams.get('ref');
-        if (refCode) {
-            const select = document.getElementById('regComunidad');
-            for (let i = 0; i < select.options.length; i++) {
-                if (select.options[i].dataset.codigo === refCode.toUpperCase()) {
-                    select.selectedIndex = i;
-                    break;
-                }
-            }
+function normalizeRefCode(v) {
+    return String(v || '').trim().toUpperCase();
+}
+
+async function loadRegisterComunidadesAndPreselect() {
+    const comunidades = await db.collection('comunidades').orderBy('nombre').get();
+    const opciones = comunidades.docs.map(d => {
+        const data = d.data() || {};
+        const codigo = normalizeRefCode(data.codigo || '');
+        const nombre = String(data.nombre || '');
+        return `<option value="${d.id}" data-codigo="${codigo}" data-nombre="${nombre}">${nombre}</option>`;
+    }).join('');
+
+    const select = document.getElementById('regComunidad');
+    select.innerHTML = '<option value="">-- Seleccionar --</option>' + opciones;
+
+    // Check for ?ref= parameter and preselect by código OR nombre
+    const refCode = normalizeRefCode(new URLSearchParams(window.location.search).get('ref'));
+    if (!refCode) return;
+
+    for (let i = 0; i < select.options.length; i++) {
+        const opt = select.options[i];
+        const codigo = normalizeRefCode(opt.dataset.codigo || '');
+        const nombre = normalizeRefCode(opt.dataset.nombre || opt.text || '');
+        if (codigo === refCode || nombre === refCode) {
+            select.selectedIndex = i;
+            break;
         }
-    };
+    }
+}
+
+document.getElementById('showRegister').onclick = async () => {
+    showView('register');
+    await loadRegisterComunidadesAndPreselect();
+};
 document.getElementById('showLogin').onclick = () => showView('login');
 document.getElementById('showWithCode').onclick = () => showView('enterCode');
 document.getElementById('backToSelect').onclick = () => showView('selectComunidad');
@@ -2344,18 +2359,7 @@ auth.onAuthStateChanged(async (user) => {
     } else if (refParam) {
         // If there's a ref parameter, show registration with comunidad preselected
         showView('register');
-        // Load comunidades for selection
-        const comunidades = await db.collection('comunidades').orderBy('nombre').get();
-        const opciones = comunidades.docs.map(d => `<option value="${d.id}" data-codigo="${d.data().codigo}">${d.data().nombre}</option>`).join('');
-        document.getElementById('regComunidad').innerHTML = '<option value="">-- Seleccionar --</option>' + opciones;
-        // Preselect comunidad by ref code
-        const select = document.getElementById('regComunidad');
-        for (let i = 0; i < select.options.length; i++) {
-            if (select.options[i].dataset.codigo === refParam.toUpperCase()) {
-                select.selectedIndex = i;
-                break;
-            }
-        }
+        await loadRegisterComunidadesAndPreselect();
     } else {
         showView('login');
     }
