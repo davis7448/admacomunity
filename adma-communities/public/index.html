@@ -255,7 +255,7 @@
                 <p class="text-[8px] md:text-[10px] text-slate-400">Guías</p>
             </div>
         </div>
-        <div id="userRetosList" class="space-y-3"></div>
+        <div id="userRetosList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         
         <!-- Top 10 visible on mobile -->
         <div class="md:hidden mt-6">
@@ -1255,21 +1255,37 @@ async function loadLiderData(user, userData) {
     const comunidades = await db.collection('comunidades').where('liderId', '==', user.uid).get();
     const comunidadesList = comunidades.docs.map(d => ({ id: d.id, ...d.data() }));
     
+    // OPTIMIZED: Get all users and all ventas in fewer queries
+    const allUsersSnap = await db.collection('users').get();
+    const allUsers = allUsersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const comunidadesIds = comunidadesList.map(c => c.id);
+    const usersInComunidades = allUsers.filter(u => comunidadesIds.includes(u.comunidadId));
+    
+    // Get all ventas once (single query)
+    const allVentasSnap = await db.collection('ventas').get();
+    const allVentas = allVentasSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    
+    // Build miembros with their ventas computed locally
+    const miembros = [];
     let totalMembers = 0;
     let totalVentas = 0;
     let facturacion = 0;
-    const miembros = [];
     
     for (const com of comunidadesList) {
-        const users = await db.collection('users').where('comunidadId', '==', com.id).get();
-        totalMembers += users.size;
+        const comUsers = usersInComunidades.filter(u => u.comunidadId === com.id);
+        totalMembers += comUsers.length;
         
-        for (const u of users.docs) {
-            const uData = u.data();
-            miembros.push({ ...uData, comunidadNombre: com.nombre });
-            const ventas = await getVentasByEmail(uData.email);
-            totalVentas += ventas.length;
-            facturacion += ventas.reduce((sum, v) => sum + (parseFloat(v.totalOrden) || 0), 0);
+        for (const u of comUsers) {
+            // Filter ventas locally instead of querying per user
+            const userVentas = allVentas.filter(v => 
+                (v.correoDropshipper || '').toLowerCase() === (u.email || '').toLowerCase()
+            );
+            const userSales = userVentas.reduce((sum, v) => sum + (parseFloat(v.totalOrden) || 0), 0);
+            const userUnits = userVentas.reduce((sum, v) => sum + (parseInt(v.cantidad) || 0), 0);
+            
+            miembros.push({ ...u, comunidadNombre: com.nombre, totalSales: userSales, unitsSold: userUnits });
+            totalVentas += userVentas.length;
+            facturacion += userSales;
         }
     }
     
@@ -1320,20 +1336,8 @@ async function loadLiderData(user, userData) {
     const pset = new Set(userData.paises || []);
     document.querySelectorAll('input[name="perfilPais"]').forEach(cb => cb.checked = pset.has(cb.value));
 
-    // Deduplicar miembros por email para evitar tarjetas repetidas
-    const uniqueByEmail = new Map();
-    for (const u of miembros) {
-      const key = (u.email || '').trim().toLowerCase() || Math.random().toString(36);
-      if (!uniqueByEmail.has(key)) uniqueByEmail.set(key, u);
-    }
-
-    window.liderMembersData = [];
-    for (const u of uniqueByEmail.values()) {
-      const ventasUser = await getVentasByEmail(u.email || '');
-      const totalSales = ventasUser.reduce((sum, v) => sum + (parseFloat(v.totalOrden) || 0), 0);
-      const unitsSold = ventasUser.reduce((sum, v) => sum + (parseInt(v.cantidad) || 0), 0);
-      window.liderMembersData.push({ ...u, totalSales, unitsSold });
-    }
+    // Use pre-computed miembros data (already has totalSales and unitsSold)
+    window.liderMembersData = [...miembros];
     renderLiderUsers();
 
     const top10 = [...window.liderMembersData]

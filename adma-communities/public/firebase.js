@@ -178,24 +178,34 @@ async function getVentasByEmail(email) {
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
-// Get ventas by comunidad (through user lookup)
+// Get ventas by comunidad (OPTIMIZED - single query)
 async function getVentasByComunidad(comunidadId) {
   // Get users in comunidad
   const users = await db.collection('users')
     .where('comunidadId', '==', comunidadId)
     .get();
   
-  const emails = users.docs.map(doc => doc.data().email.toLowerCase());
+  const emails = users.docs.map(doc => doc.data().email?.toLowerCase()).filter(Boolean);
   
   if (emails.length === 0) return [];
   
-  // Get ventas for all these emails
-  const ventas = [];
-  for (const email of emails) {
-    const userVentas = await getVentasByEmail(email);
-    ventas.push(...userVentas);
-  }
+  // Single query: get ALL ventas, then filter locally
+  const allVentas = await db.collection('ventas').get();
+  const ventas = allVentas.docs
+    .map(doc => ({ id: doc.id, ...doc.data() }))
+    .filter(v => emails.includes((v.correoDropshipper || '').toLowerCase()));
+  
   return ventas;
+}
+
+// Get ventas stats for a comunidad (even more optimized - just counts)
+async function getVentasStatsByComunidad(comunidadId) {
+  const ventas = await getVentasByComunidad(comunidadId);
+  return {
+    totalVentas: ventas.length,
+    facturacion: ventas.reduce((sum, v) => sum + (parseFloat(v.totalOrden) || 0), 0),
+    unidades: ventas.reduce((sum, v) => sum + (parseInt(v.cantidad) || 0), 0)
+  };
 }
 
 // ==================== LÍDERES ====================
