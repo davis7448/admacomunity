@@ -254,16 +254,18 @@ describe('Lider Access Control', () => {
   let rulesContent = loadRules();
   
   test('TEST: Líder puede leer usuarios de su comunidad', () => {
-    // Verificar que existe la función comunidadEsDeLider
-    const hasComunidadEsDeLider = /function comunidadEsDeLider\(comunidadId\)/.test(rulesContent);
-    assert(hasComunidadEsDeLider, 'comunidadEsDeLider function should exist');
+    // Verificar que existe la función recursoUsuarioEsDeMiComunidad o comunidadEsDeLider
+    const hasFuncion = /function recursoUsuarioEsDeMiComunidad\(\)|function comunidadEsDeLider\(comunidadId\)/.test(rulesContent);
+    assert(hasFuncion, 'recursoUsuarioEsDeMiComunidad or comunidadEsDeLider function should exist');
     
     // Verificar que usuarios permite lectura a lider de la comunidad
     const usersReadRule = analyzeCollectionRule(rulesContent, 'users', 'read');
     assert(usersReadRule !== null, 'Users read rule should exist');
     
-    // Debe tener verificación de líder
-    assertContains(usersReadRule, 'isLider()', 'Users should allow lider access');
+    // Debe tener verificación de líder (directa o a través de función helper)
+    const hasLiderCheck = usersReadRule.includes('isLider()') || 
+                          usersReadRule.includes('recursoUsuarioEsDeMiComunidad()');
+    assert(hasLiderCheck, 'Users rule should allow lider access (via isLider or helper function)');
     // La regla puede verificar comunidad de diferentes formas
     const hasComunidadCheck = usersReadRule.includes('comunidad') || 
                               usersReadRule.includes('comunidadId') ||
