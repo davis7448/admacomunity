@@ -18,8 +18,50 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == uid;
     }
 
+    function isNonEmptyString(v, maxLen) {
+      return v is string && v.size() > 0 && v.size() <= maxLen;
+    }
+
+    function isOptionalString(v, maxLen) {
+      return v == null || (v is string && v.size() <= maxLen);
+    }
+
+    function isValidUserDoc() {
+      return isNonEmptyString(request.resource.data.email, 160)
+        && isOptionalString(request.resource.data.nombre, 120)
+        && isOptionalString(request.resource.data.foto, 5000)
+        && isOptionalString(request.resource.data.comunidadId, 128)
+        && isOptionalString(request.resource.data.telefono, 40)
+        && (request.resource.data.rol == null
+          || request.resource.data.rol in ['usuario', 'lider', 'admin']);
+    }
+
+    function isValidComunidadDoc() {
+      return isNonEmptyString(request.resource.data.nombre, 120)
+        && isNonEmptyString(request.resource.data.codigo, 64)
+        && isOptionalString(request.resource.data.logo, 10000)
+        && isOptionalString(request.resource.data.liderId, 128);
+    }
+
+    function isValidRetoDoc() {
+      return isNonEmptyString(request.resource.data.titulo, 140)
+        && (request.resource.data.meta is int || request.resource.data.meta is float || request.resource.data.meta is string)
+        && isOptionalString(request.resource.data.descripcion, 2000)
+        && isOptionalString(request.resource.data.imagen, 10000)
+        && isOptionalString(request.resource.data.comunidadId, 128)
+        && (request.resource.data.tipo == null
+          || request.resource.data.tipo in ['facturacion', 'facturación', 'unidades', 'guias', 'guías']);
+    }
+
+    function isValidInscripcionDoc() {
+      return isNonEmptyString(request.resource.data.userId, 128)
+        && isNonEmptyString(request.resource.data.retoId, 128)
+        && isOptionalString(request.resource.data.comunidadId, 128);
+    }
+
     function comunidadEsDeLider(comunidadId) {
       return isLider()
+        && comunidadId != null
         && exists(/databases/$(database)/documents/comunidades/$(comunidadId))
         && get(/databases/$(database)/documents/comunidades/$(comunidadId)).data.liderId == request.auth.uid;
     }
@@ -39,8 +81,8 @@ service cloud.firestore {
         || isSelf(userId)
         || recursoUsuarioEsDeMiComunidad();
 
-      allow create: if isAdmin() || isSelf(userId);
-      allow update: if isAdmin() || isSelf(userId);
+      allow create: if (isAdmin() || isSelf(userId)) && isValidUserDoc();
+      allow update: if (isAdmin() || isSelf(userId)) && isValidUserDoc();
       allow delete: if isAdmin();
     }
 
@@ -62,11 +104,15 @@ service cloud.firestore {
     match /comunidades/{comunidadId} {
       allow read: if true;  // Público para registro
 
-      allow create: if isAdmin()
-        || (isLider() && request.resource.data.liderId == request.auth.uid);
+      allow create: if isValidComunidadDoc() && (
+          isAdmin()
+          || (isLider() && request.resource.data.liderId == request.auth.uid)
+        );
 
-      allow update: if isAdmin()
-        || (isLider() && resource.data.liderId == request.auth.uid);
+      allow update: if isValidComunidadDoc() && (
+          isAdmin()
+          || (isLider() && resource.data.liderId == request.auth.uid)
+        );
 
       allow delete: if isAdmin();
     }
@@ -75,11 +121,15 @@ service cloud.firestore {
     match /retos/{retoId} {
       allow read: if isSignedIn();
 
-      allow create: if isAdmin()
-        || (isLider() && comunidadEsDeLider(request.resource.data.comunidadId));
+      allow create: if isValidRetoDoc() && (
+          isAdmin()
+          || (isLider() && comunidadEsDeLider(request.resource.data.comunidadId))
+        );
 
-      allow update: if isAdmin()
-        || (isLider() && comunidadEsDeLider(resource.data.comunidadId));
+      allow update: if isValidRetoDoc() && (
+          isAdmin()
+          || (isLider() && comunidadEsDeLider(resource.data.comunidadId))
+        );
 
       allow delete: if isAdmin()
         || (isLider() && comunidadEsDeLider(resource.data.comunidadId));
@@ -91,8 +141,10 @@ service cloud.firestore {
         || (isSignedIn() && resource.data.userId == request.auth.uid)
         || (isLider() && comunidadEsDeLider(resource.data.comunidadId));
 
-      allow create: if isAdmin()
-        || (isSignedIn() && request.resource.data.userId == request.auth.uid);
+      allow create: if isValidInscripcionDoc() && (
+          isAdmin()
+          || (isSignedIn() && request.resource.data.userId == request.auth.uid)
+        );
 
       allow update, delete: if isAdmin();
     }
@@ -102,6 +154,7 @@ service cloud.firestore {
       // Solo admin y líderes pueden leer ventas
       allow read: if isAdmin() || isLider();
 
+      // Solo admin puede modificar; validaciones de estructura se realizan en importador
       allow create, update, delete: if isAdmin();
     }
 
