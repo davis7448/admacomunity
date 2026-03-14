@@ -5,28 +5,28 @@
  * Para usar:
  * 1. Crear cuenta en glitchtip.com (o instancia self-hosted)
  * 2. Crear proyecto para ADMA Communities
- * 3. Reemplazar GLITCHTIP_DSN con tu URL
+ * 3. Reemplazar GLITCHTIP_URL con tu URL
  */
 
 (function() {
   'use strict';
   
-  // Configuración - REEMPLAZAR con tu DSN de GlitchTip
-  // Ejemplo: 'https://[email protected]/1'
-  var GLITCHTIP_DSN = null; // Set null para deshabilitar
+  // Configuración - GlitchTip self-hosted
+  // ¡NO REQUIRE DSN! Usa API directa
+  var GLITCHTIP_URL = 'http://72.60.121.154:8000';
   
   // No cargar script externo - GlitchTip usa su propio SDK o API
   // Puedes configurar esto manualmente o usar self-hosted
   
-  if (GLITCHTIP_DSN) {
+  if (GLITCHTIP_URL) {
     console.log('🔍 GlitchTip configured - Error tracking enabled');
   }
   
   // Función global para capturar errores manualmente
   window.admaCaptureException = function(error, context) {
-    if (GLITCHTIP_DSN) {
-      // Enviar a GlitchTip via API
-      fetch(GLITCHTIP_DSN + '/api/', {
+    if (GLITCHTIP_URL) {
+    // Enviar a GlitchTip via API
+    fetch(GLITCHTIP_URL + '/api/1/store/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,8 +52,8 @@
   
   // Función para capturar mensajes
   window.admaCaptureMessage = function(message, level) {
-    if (GLITCHTIP_DSN) {
-      fetch(GLITCHTIP_DSN + '/api/', {
+    if (GLITCHTIP_URL) {
+      fetch(GLITCHTIP_URL + '/api/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,5 +107,5 @@
     });
   }
   
-  console.log('📊 GlitchTip integration loaded (DSN: ' + (GLITCHTIP_DSN ? 'configured' : 'not configured') + ')');
+  console.log('📊 GlitchTip integration loaded (DSN: ' + (GLITCHTIP_URL ? 'configured' : 'not configured') + ')');
 })();
