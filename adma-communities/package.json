@@ -11,11 +11,14 @@
     "test:ui": "node tests/ui.test.js",
     "test:e2e": "playwright test tests/e2e",
     "typecheck": "tsc --noEmit",
-    "build:ts": "tsc"
+    "build:ts": "tsc",
+    "coverage": "nyc --reporter=text --reporter=lcov npm test",
+    "coverage:report": "nyc report --reporter=text-summary"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
     "@types/node": "^25.5.0",
+    "nyc": "^18.0.0",
     "playwright": "^1.40.0",
     "typescript": "^5.9.3"
   },

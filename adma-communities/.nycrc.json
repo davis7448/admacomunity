@@ -1,0 +1,9 @@
+{
+  "extension": [".js"],
+  "include": ["tests/**/*.js"],
+  "exclude": ["node_modules/", "dist/"],
+  "all": true,
+  "check-coverage": false,
+  "reporter": ["text", "lcov"],
+  "temp-dir": "./coverage"
+}
