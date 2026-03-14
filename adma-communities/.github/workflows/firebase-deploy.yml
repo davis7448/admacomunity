@@ -1,0 +1,41 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'public/**'
+      - 'firebase.json'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: npm run test:e2e
+
+      - name: Deploy to Firebase
+        uses: firebase-actions/deploy-hosting@v4
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseProjectId: adma-communities
