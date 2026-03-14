@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link rel="icon" type="image/png" href="/logo.png">
 <title>ADMA Communities - Nexus Command</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -36,8 +37,8 @@
 <div id="loginView" class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md">
         <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full border-2 border-primary p-1 mb-4 neon-glow">
-                <span class="material-symbols-outlined text-4xl text-primary">hub</span>
+            <div class="inline-flex items-center justify-center mb-4">
+                <img src="/logo.png" alt="ADMA Logo" class="w-24 h-24 object-contain">
             </div>
             <h1 class="text-4xl font-bold tracking-tight">ADMA</h1>
             <p class="text-primary text-sm font-bold uppercase tracking-[0.3em] mt-1">Communities</p>
@@ -240,7 +241,6 @@
         <button id="menuToggleBtn" class="md:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-primary text-black">
             <span class="material-symbols-outlined">menu</span>
         </button>
-        <h2 class="text-xl font-bold mb-4">Mis Retos</h2>
         <div class="grid grid-cols-3 gap-2 md:gap-3 mb-4 md:mb-6">
             <div class="bg-white/5 rounded-xl p-2 md:p-3 text-center min-w-0">
                 <p class="text-[clamp(1rem,5vw,1.75rem)] font-bold text-primary leading-none truncate" id="statVentas" title="0">0</p>
@@ -255,7 +255,20 @@
                 <p class="text-[8px] md:text-[10px] text-slate-400">Guías</p>
             </div>
         </div>
-        <div id="userRetosList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+        <!-- Mis Retos (inscritos) -->
+        <div class="flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined text-primary">military_tech</span>
+            <h2 class="text-lg font-bold">Mis Retos</h2>
+        </div>
+        <div id="userRetosList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"></div>
+
+        <!-- Retos disponibles (no inscritos) -->
+        <div class="flex items-center gap-2 mb-3 mt-2">
+            <span class="material-symbols-outlined text-slate-400">event_available</span>
+            <h2 class="text-lg font-bold text-slate-300">Retos Disponibles</h2>
+        </div>
+        <div id="userRetosDisponibles" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         
         <!-- Top 10 visible on mobile -->
         <div class="md:hidden mt-6">
@@ -288,7 +301,7 @@
   <header class="sticky top-0 z-20 border-b border-white/10 bg-[#0a0a05]/90 backdrop-blur">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <div class="size-10 rounded-xl bg-primary text-black flex items-center justify-center"><span class="material-symbols-outlined">hub</span></div>
+        <div class="size-10 rounded-xl bg-primary/10 overflow-hidden flex items-center justify-center"><img src="/logo.png" alt="ADMA" class="w-full h-full object-contain"></div>
         <div>
           <p class="text-[11px] tracking-[0.22em] text-primary font-black">COMMUNITY NEXUS</p>
           <p class="text-xs text-slate-400 uppercase tracking-[0.16em]">Leader Console</p>
@@ -469,8 +482,8 @@
 <div id="adminDashboard" class="hidden">
     <header class="flex items-center justify-between p-4 sticky top-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-primary/30">
         <div class="flex items-center gap-3">
-            <div class="size-10 rounded-full border-2 border-primary p-0.5 bg-primary/10">
-                <span class="material-symbols-outlined text-2xl text-primary w-full h-full flex items-center justify-center">admin_panel_settings</span>
+            <div class="size-10 rounded-full border-2 border-primary p-0.5 bg-primary/10 overflow-hidden">
+                <img src="/logo.png" alt="ADMA" class="w-full h-full object-contain">
             </div>
             <div>
                 <h1 class="text-lg font-bold tracking-tight">ADMIN PANEL</h1>
@@ -540,7 +553,10 @@
         </div>
 
         <div class="glass-card rounded-2xl p-6">
-            <h3 class="text-xl font-bold mb-4">Comunidades (Admin)</h3>
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold">Comunidades (Admin)</h3>
+                <button id="adminCreateComunidadBtn" class="bg-primary text-black font-bold px-4 py-2 rounded-lg text-sm">+ Nueva Comunidad</button>
+            </div>
             <div id="comunidadesAdminList" class="space-y-2"></div>
         </div>
 
@@ -612,6 +628,12 @@
       <input type="text" id="editComunidadCodigo" placeholder="Código" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white uppercase">
       <input type="text" id="editComunidadLogo" placeholder="URL Logo" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white">
       <label for="editComunidadLogoFile" class="flex items-center justify-center gap-2 w-full bg-primary/20 hover:bg-primary/30 border border-primary/30 rounded-xl px-4 py-2 text-primary cursor-pointer transition"><span class="material-symbols-outlined text-lg">upload</span>Cambiar imagen</label><input type="file" id="editComunidadLogoFile" accept="image/*" class="hidden">
+      <div>
+        <label class="text-slate-400 text-xs block mb-1">Líder asignado</label>
+        <select id="editComunidadLiderId" style="background-color:#1a1a0a;color:#fff;border:1px solid rgba(255,255,255,0.2)" class="w-full rounded-xl px-4 py-2">
+          <option value="">Sin líder asignado</option>
+        </select>
+      </div>
     </div>
     <div class="flex gap-3 mt-4">
       <button id="saveComunidadEditBtn" class="flex-1 bg-primary text-black font-bold py-2 rounded-xl">Guardar</button>
@@ -705,6 +727,12 @@
             <input type="text" id="newComunidadCodigo" placeholder="Código único (ej: COLOMBIA-24)" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white uppercase" required>
             <input type="text" id="newComunidadLogo" placeholder="URL del logo (opcional)" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white">
             <label for="newComunidadLogoFile" class="flex items-center justify-center gap-2 w-full bg-primary/20 hover:bg-primary/30 border border-primary/30 rounded-xl px-4 py-2 text-primary cursor-pointer transition"><span class="material-symbols-outlined text-lg">upload</span>Subir imagen</label><input type="file" id="newComunidadLogoFile" accept="image/*" class="hidden">
+            <div id="newComunidadLiderRow" class="hidden">
+                <label class="text-slate-400 text-xs block mb-1">Líder asignado</label>
+                <select id="newComunidadLiderId" style="background-color:#1a1a0a;color:#fff;border:1px solid rgba(255,255,255,0.2)" class="w-full rounded-xl px-4 py-2">
+                    <option value="">Sin líder asignado</option>
+                </select>
+            </div>
         </div>
         <div class="flex gap-3 mt-4">
             <button id="saveComunidadBtn" class="flex-1 bg-primary text-black font-bold py-2 rounded-xl">Crear</button>
@@ -1092,78 +1120,101 @@ async function getRetoRankingFast(retoId) {
 
 async function loadUserRetos(user, userData) {
   const list = document.getElementById('userRetosList');
+  const disponiblesList = document.getElementById('userRetosDisponibles');
   const topList = document.getElementById('userTop10List');
   if (!list) return;
 
   if (!userData.comunidadId) {
     list.innerHTML = '<p class="text-sm text-slate-400">No tienes comunidad asignada.</p>';
+    if (disponiblesList) disponiblesList.innerHTML = '';
     return;
   }
 
-  const [retosSnap, insSnap] = await Promise.all([
+  const [retosSnap, retosGlobalesSnap, insSnap] = await Promise.all([
     db.collection('retos').where('comunidadId','==', userData.comunidadId).get(),
+    db.collection('retos').where('global','==', true).get(),
     db.collection('inscripciones').where('userId','==', user.uid).get()
   ]);
-  
-  const insMap = new Map(insSnap.docs.map(d => [d.data().retoId, d.data()]));
-  const retos = retosSnap.docs.map(d => ({ id:d.id, ...d.data() }));
 
-  let html = '';
+  const insMap = new Map(insSnap.docs.map(d => [d.data().retoId, d.data()]));
+  // Combinar retos de comunidad + globales, sin duplicados
+  const retosMap = new Map();
+  retosSnap.docs.forEach(d => retosMap.set(d.id, { id: d.id, ...d.data() }));
+  retosGlobalesSnap.docs.forEach(d => { if (!retosMap.has(d.id)) retosMap.set(d.id, { id: d.id, ...d.data() }); });
+  const retos = Array.from(retosMap.values());
+
+  let htmlInscritos = '';
+  let htmlDisponibles = '';
   let userPosicion = '-';
   let userPuntos = 0;
-  
+
   for (const r of retos) {
     const ins = insMap.get(r.id);
     const estado = getRetoEstado(r);
     const estadoLabel = estado === 'live' ? 'En curso' : (estado === 'upcoming' ? 'Próximo' : 'Terminado');
     const estadoCls = estado === 'live' ? 'bg-green-500' : (estado === 'upcoming' ? 'bg-yellow-500' : 'bg-slate-500');
-    
-    let progreso = 0;
-    let valorActual = 0;
-    let rankPos = '-';
-    
-    if (ins) {
+    const retoImg = r.imagen || 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800';
+    const isIn = !!ins;
+
+    if (isIn) {
+      // — Reto inscrito: mostrar progreso y ranking
       const en = ins.enrolledAt?.toDate ? ins.enrolledAt.toDate().toISOString().slice(0,10) : '';
       const prog = await computeUserRetoProgress(r, (userData.email || user.email || '').toLowerCase(), en, user.uid);
-      progreso = prog.pct || 0;
-      valorActual = prog.valor || 0;
+      const progreso = prog.pct || 0;
+      const valorActual = prog.valor || 0;
       const rankFast = await getRetoRankingFast(r.id);
       const rankingTop = rankFast.top10 || [];
       const inTop = rankingTop.findIndex(x => x.userId === user.uid);
-      if (inTop >= 0) rankPos = '#' + (inTop + 1);
+      const rankPos = inTop >= 0 ? '#' + (inTop + 1) : '-';
+      const barColor = progreso >= 100 ? 'bg-green-500' : (progreso >= 50 ? 'bg-yellow-500' : 'bg-primary');
+
+      htmlInscritos += `<div class="bg-white/5 rounded-xl overflow-hidden border border-primary/20">
+        <div class="h-24 bg-cover bg-center" style="background-image:url('${retoImg.replace(/'/g,"%27")}')"></div>
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full ${estadoCls}"></span>
+              <span class="font-bold text-sm">${r.titulo || 'Reto'}</span>
+            </div>
+            <span class="text-[10px] text-slate-400">${estadoLabel}</span>
+          </div>
+          <div class="text-xs text-slate-400 mb-3">Meta: ${Number(r.meta||0).toLocaleString()} ${r.tipo || ''}</div>
+          <div class="mb-3">
+            <div class="flex justify-between text-xs mb-1">
+              <span>Progreso</span>
+              <span class="text-primary">${valorActual} / ${Number(r.meta||0).toLocaleString()}</span>
+            </div>
+            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+              <div class="h-full ${barColor} transition-all" style="width: ${progreso}%"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-slate-400">Posición: ${rankPos}</span>
+            <span class="px-4 py-1.5 rounded-lg text-xs font-bold bg-green-500/20 text-green-400">Inscrito</span>
+          </div>
+        </div>
+      </div>`;
+    } else {
+      // — Reto disponible: mostrar info básica y botón de inscripción
+      const canJoin = estado !== 'ended';
+      htmlDisponibles += `<div class="bg-white/5 rounded-xl overflow-hidden border border-white/10 opacity-90">
+        <div class="h-24 bg-cover bg-center" style="background-image:url('${retoImg.replace(/'/g,"%27")}')"></div>
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full ${estadoCls}"></span>
+              <span class="font-bold text-sm">${r.titulo || 'Reto'}</span>
+            </div>
+            <span class="text-[10px] text-slate-400">${estadoLabel}</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-3">${r.descripcion || ''}</p>
+          <div class="text-xs text-slate-400 mb-3">Meta: ${Number(r.meta||0).toLocaleString()} ${r.tipo || ''} · ${r.inicio||''} → ${r.fin||''}</div>
+          <div class="flex justify-end">
+            <button ${canJoin ? '' : 'disabled'} onclick="inscribirmeReto('${r.id}')" class="px-4 py-1.5 rounded-lg text-xs font-bold ${canJoin ? 'bg-primary text-black hover:brightness-110' : 'bg-slate-500/20 text-slate-400 cursor-not-allowed'}">${canJoin ? 'Inscribirme' : 'Cerrado'}</button>
+          </div>
+        </div>
+      </div>`;
     }
-    
-    const isIn = !!ins;
-    const canJoin = !isIn && estado !== 'ended';
-    const barColor = progreso >= 100 ? 'bg-green-500' : (progreso >= 50 ? 'bg-yellow-500' : 'bg-primary');
-    const retoImg = r.imagen || 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800';
-    
-    html += `<div class="bg-white/5 rounded-xl overflow-hidden border border-white/10">
-      <div class="h-24 bg-cover bg-center" style="background-image:url('${retoImg.replace(/'/g,"%27")}')"></div>
-      <div class="p-4">
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full ${estadoCls}"></span>
-            <span class="font-bold text-sm">${r.titulo || 'Reto'}</span>
-          </div>
-          <span class="text-[10px] text-slate-400">${estadoLabel}</span>
-        </div>
-        <div class="text-xs text-slate-400 mb-3">Meta: ${Number(r.meta||0).toLocaleString()} ${r.tipo || ''}</div>
-        <div class="mb-3">
-          <div class="flex justify-between text-xs mb-1">
-            <span>Progreso</span>
-            <span class="text-primary">${valorActual} / ${Number(r.meta||0).toLocaleString()}</span>
-          </div>
-          <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-            <div class="h-full ${barColor} transition-all" style="width: ${progreso}%"></div>
-          </div>
-        </div>
-        <div class="flex items-center justify-between">
-          <span class="text-xs text-slate-400">Posición: ${rankPos}</span>
-          <button ${canJoin ? '' : 'disabled'} onclick="inscribirmeReto('${r.id}')" class="px-4 py-1.5 rounded-lg text-xs font-bold ${isIn ? 'bg-green-500/20 text-green-400' : (estado==='ended' ? 'bg-slate-500/20 text-slate-400' : 'bg-primary text-black')}">${isIn ? 'Inscrito' : (estado==='ended' ? 'Cerrado' : 'Inscribirme')}</button>
-        </div>
-      </div>
-    </div>`;
   }
 
   // Also load Top 10 for the community
@@ -1201,7 +1252,8 @@ async function loadUserRetos(user, userData) {
   }
   
   document.getElementById('userRanking').textContent = userPosicion;
-  list.innerHTML = html || '<p class="text-sm text-slate-400 text-center py-8">No hay retos disponibles en tu comunidad.</p>';
+  list.innerHTML = htmlInscritos || '<p class="text-sm text-slate-400 text-center py-8">Aún no estás inscrito en ningún reto.</p>';
+  if (disponiblesList) disponiblesList.innerHTML = htmlDisponibles || '<p class="text-sm text-slate-400 text-center py-8">No hay retos disponibles en tu comunidad.</p>';
 }
 
 window.verTop10Reto = async function(retoId, titulo) {
@@ -1496,6 +1548,27 @@ document.getElementById('createComunidadBtn').onclick = () => {
     document.getElementById('newComunidadCodigo').value = '';
     document.getElementById('newComunidadLogo').value = '';
     if (document.getElementById('newComunidadLogoFile')) document.getElementById('newComunidadLogoFile').value = '';
+    document.getElementById('newComunidadLiderRow').classList.add('hidden');
+    document.getElementById('createComunidadModal').classList.remove('hidden');
+    document.getElementById('createComunidadModal').classList.add('flex');
+};
+
+// Create Comunidad Modal (Admin) — muestra selector de líder
+document.getElementById('adminCreateComunidadBtn').onclick = async () => {
+    document.getElementById('newComunidadNombre').value = '';
+    document.getElementById('newComunidadCodigo').value = '';
+    document.getElementById('newComunidadLogo').value = '';
+    if (document.getElementById('newComunidadLogoFile')) document.getElementById('newComunidadLogoFile').value = '';
+    // Mostrar y poblar el selector de líder
+    const liderRow = document.getElementById('newComunidadLiderRow');
+    liderRow.classList.remove('hidden');
+    const lideresSnap = await db.collection('lideres').get();
+    const sel = document.getElementById('newComunidadLiderId');
+    sel.innerHTML = '<option value="" style="background:#1a1a0a">Sin líder asignado</option>' +
+        lideresSnap.docs.map(d => {
+            const ld = d.data();
+            return `<option value="${d.id}" style="background:#1a1a0a">${ld.nombre || ld.email || d.id}</option>`;
+        }).join('');
     document.getElementById('createComunidadModal').classList.remove('hidden');
     document.getElementById('createComunidadModal').classList.add('flex');
 };
@@ -1518,34 +1591,44 @@ document.getElementById('saveComunidadBtn').onclick = async () => {
     const nombre = document.getElementById('newComunidadNombre').value;
     const codigo = document.getElementById('newComunidadCodigo').value.toUpperCase();
     const logo = document.getElementById('newComunidadLogo').value.trim();
-    
+
     if (!nombre || !codigo) {
         alert('Completa todos los campos');
         return;
     }
-    
-    // Get current user (leader)
+
     const user = auth.currentUser;
     if (!user) {
         alert('Sesión expirada');
         return;
     }
-    
+
+    // Si el selector de líder está visible, viene del admin → usar el líder seleccionado
+    // Si está oculto, viene del líder → usar su propio UID
+    const liderRow = document.getElementById('newComunidadLiderRow');
+    const esAdmin = !liderRow.classList.contains('hidden');
+    const liderId = esAdmin
+        ? document.getElementById('newComunidadLiderId').value
+        : user.uid;
+
     try {
         await db.collection('comunidades').add({
             nombre: nombre,
             codigo: codigo,
             logo: logo || '',
-            liderId: user.uid,
+            liderId: liderId || null,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-        
+
         document.getElementById('createComunidadModal').classList.add('hidden');
         alert('✓ Comunidad creada!');
-        
-        // Refresh lider data
-        const liderDoc = await db.collection('lideres').doc(user.uid).get();
-        loadLiderData(user, liderDoc.data());
+
+        if (esAdmin) {
+            loadAdminData();
+        } else {
+            const liderDoc = await db.collection('lideres').doc(user.uid).get();
+            loadLiderData(user, liderDoc.data());
+        }
     } catch(e) {
         alert('Error: ' + e.message);
     }
@@ -1728,6 +1811,17 @@ window.openEditComunidad = async function(comunidadId) {
     document.getElementById('editComunidadCodigo').value = c.codigo || '';
     document.getElementById('editComunidadLogo').value = c.logo || '';
     if (document.getElementById('editComunidadLogoFile')) document.getElementById('editComunidadLogoFile').value = '';
+
+    // Cargar líderes disponibles y pre-seleccionar el actual
+    const lideresSnap = await db.collection('lideres').get();
+    const sel = document.getElementById('editComunidadLiderId');
+    sel.innerHTML = '<option value="" style="background:#1a1a0a">Sin líder asignado</option>' +
+        lideresSnap.docs.map(d => {
+            const ld = d.data();
+            const selected = d.id === c.liderId ? 'selected' : '';
+            return `<option value="${d.id}" ${selected} style="background:#1a1a0a">${ld.nombre || ld.email || d.id}</option>`;
+        }).join('');
+
     const m = document.getElementById('editComunidadModal');
     m.classList.remove('hidden');
     m.classList.add('flex');
@@ -1754,8 +1848,9 @@ document.getElementById('saveComunidadEditBtn').onclick = async () => {
     const nombre = document.getElementById('editComunidadNombre').value.trim();
     const codigo = document.getElementById('editComunidadCodigo').value.trim().toUpperCase();
     const logo = document.getElementById('editComunidadLogo').value.trim();
+    const liderId = document.getElementById('editComunidadLiderId').value;
     if (!id || !nombre || !codigo) return alert('Completa nombre y código');
-    await db.collection('comunidades').doc(id).set({ nombre, codigo, logo, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    await db.collection('comunidades').doc(id).set({ nombre, codigo, logo, liderId: liderId || null, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
     const m = document.getElementById('editComunidadModal');
     m.classList.add('hidden');
     m.classList.remove('flex');
