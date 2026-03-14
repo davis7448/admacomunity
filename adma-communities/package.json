@@ -9,11 +9,15 @@
     "test:functional": "node tests/functional.test.js",
     "test:performance": "node tests/performance.test.js",
     "test:ui": "node tests/ui.test.js",
-    "test:e2e": "playwright test tests/e2e"
+    "test:e2e": "playwright test tests/e2e",
+    "typecheck": "tsc --noEmit",
+    "build:ts": "tsc"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
-    "playwright": "^1.40.0"
+    "@types/node": "^25.5.0",
+    "playwright": "^1.40.0",
+    "typescript": "^5.9.3"
   },
   "keywords": [
     "firebase",
